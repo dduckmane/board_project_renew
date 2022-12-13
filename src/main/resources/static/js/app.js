@@ -4,10 +4,10 @@ if (slickSlide) {
   slickSlide.slick({
     dots: true,
     arrows: false,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slideToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1700,
     responsive: [
       {
         breakpoint: 768,

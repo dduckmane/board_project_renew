@@ -27,33 +27,33 @@
 </head>
 
 <body>
-<nav class="py-2 bg-light border-bottom">
-  <div class="container d-flex flex-wrap">
-    <ul class="nav me-auto">
-      <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-      <li class="nav-item"><a href="/user/board/list/1" class="nav-link link-dark px-2">한식</a></li>
-      <li class="nav-item"><a href="/user/board/list/2" class="nav-link link-dark px-2">양식</a></li>
-      <li class="nav-item"><a href="/user/board/list/3" class="nav-link link-dark px-2">중식</a></li>
-      <li class="nav-item"><a href="/user/board/list/4" class="nav-link link-dark px-2">일식</a></li>
-    </ul>
-    <ul class="nav">
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">로그인</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">회원가입</a></li>
-    </ul>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #c4c4c4e3;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">🍴Matjip</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav me-auto">
+
+        <li class="nav-item active"><a href="/user/board/list/1" class="nav-link link-light px-2 active">한식</a></li>
+        <li class="nav-item"><a href="/user/board/list/2" class="nav-link link-light px-2 active">양식</a></li>
+        <li class="nav-item"><a href="/user/board/list/3" class="nav-link link-light px-2 active">중식</a></li>
+        <li class="nav-item"><a href="/user/board/list/4" class="nav-link link-light px-2 active">일식</a></li>
+
+      </ul>
+
+      <ul class="nav">
+
+        <li class="nav-item"><a href="#" class="nav-link link-light px-2">로그인</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-light px-2">회원가입</a></li>
+
+      </ul>
+
+    </div>
   </div>
 </nav>
-
-<header class="py-3 mb-4 border-bottom">
-  <div class="container d-flex flex-wrap justify-content-center">
-    <a href="#" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-      <!-- <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg> -->
-      <span class="fs-4">🍴Matjip</span>
-    </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-      <input type="search" class="form-control" placeholder="지역, 식당 또는 음식" aria-label="Search">
-    </form>
-  </div>
-</header>
 
 <div class="b-example-divider"></div>
 
@@ -62,11 +62,12 @@
   <div class="section-content overlay d-flex justify-content-center align-items-center">
     <div class="container-xxl">
       <div class="row align-items-center">
-        <div class="col-md-9 welcome">
+        <div class="col-md-9 welcome main-title">
           <h1 class="welcome-title fw-light">솔직한 리뷰, 믿을 수 있는 평점!</h1>
           <div class="divider"></div>
           <div class="row welcome-desc">
-            <p class="col-col-sm-10 col-md-12 lead">믿고 보는 맛집 리스트, 지역별 인기 맛집, 세계음식 맛집 리스트 등</p>
+            <p class="col-col-sm-10 col-md-12 lead">믿고 보는 맛집 리스트, 지역별 인기 맛집, 세계음식 맛집 리스트를 소개 합니다.</p>
+            <p class="col-col-sm-10 col-md-12 lead">김민성의 첫 번째 프로젝트 맛집 블로그에 와주셔서 감사합니다.</p>
           </div>
         </div>
       </div>
@@ -74,69 +75,6 @@
   </div>
 </section>
 
-<section id="intro">
-  <div class="section-content">
-    <div class="container intro">
-      <div class="row align-items-center">
-        <div class="col-md-6 intro-first">
-          <div class="row px-md-3">
-            <div class="col-6">
-              <div class="card card-body my-3 position-relative rounded-3 shadow-lg intro-first-card">
-                <div
-                        class="overlay d-flex justify-content-center align-items-center position-absolute h-100 w-100 shadow-lg">
-                  <h3 class="fw-light">
-                    <a href="/user/board/list/1" class="link-light text-decoration-none">한식</a>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card card-body my-3 position-relative rounded-3 shadow-lg intro-first-card">
-                <div
-                        class="overlay d-flex justify-content-center align-items-center position-absolute h-100 w-100 shadow-lg">
-                  <h3 class="fw-light">
-                    <a href="/user/board/list/2" class="link-light text-decoration-none">양식</a>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card card-body my-3 position-relative rounded-3 shadow-lg intro-first-card">
-                <div
-                        class="overlay d-flex justify-content-center align-items-center position-absolute h-100 w-100 shadow-lg">
-                  <h3 class="fw-light">
-                    <a href="/user/board/list/3" class="link-light text-decoration-none">중식</a>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card card-body my-3 position-relative rounded-3 shadow-lg intro-first-card">
-                <div
-                        class="overlay d-flex justify-content-center align-items-center position-absolute h-100 w-100 shadow-lg">
-                  <h3 class="fw-light">
-                    <a href="/user/board/list/4" class="link-light text-decoration-none">일식</a>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 intro-second">
-          <h5 class="fw-light">Greetings!</h5>
-          <h1 class="mb-4">세계음식 리스트</h1>
-          <div class="intro-text">
-            <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum recusandae praesentium
-              consectetur eum quis odit! Minima, eum non vero dolores adipisci quia sint voluptatem doloribus ullam
-              cum voluptas deserunt nostrum!</p>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae expedita veniam error
-              architecto est labore maiores distinctio, hic sint! Error.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="services">
   <div class="section-content">
@@ -144,104 +82,102 @@
       <div class="services-header text-center mb-5">
         <h1 class="display-5">올해의 맛집</h1>
         <div class="divider"></div>
-        <p class="lead text-secondary">
-          🍴Matjip이 선정한 2022년에 꼭 가봐야 할 인기맛집 순위
-        </p>
-        <div class="more">
-          <a href="#">더보기</a>
-        </div>
       </div>
       <div id="slick-slide" class="sercives-body">
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              <h3>글의 제목</h3>
+              <p>조회수</p>
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
         <div class="services-col mx-2 my-3">
           <div class="card">
-            <a href="#">
-              <img src="./assets/images/food/us/KakaoTalk_20221103_061413227_01.jpg" alt="" class="card-img-top">
-            </a>
-            <div class="card-body">
-              <h4 class="card-title">Slide title</h4>
-              <p class="card-text fw-light mb-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod laboriosam quisquam totam voluptatibus. Dignissimos laudantium repellendus cum adipisci. Voluptates, eligendi!
-              </p>
-              <a href="#" class="btn btn-primary">바로가기</a>
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
             </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
           </div>
         </div>
+
+        <div class="services-col mx-2 my-3">
+          <div class="card">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
+            </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
+          </div>
+        </div>
+
+        <div class="services-col mx-2 my-3">
+          <div class="card">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center">
+              안녕하세요
+            </div>
+            <a href="#">
+              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="300rem" class="card-img-top">
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
-
-
 
 <section id="gallery">
   <div class="section-content">
@@ -249,9 +185,10 @@
       <div class="gallery-header text-center mb-5">
         <h1 class="display-4">지역별 맛집</h1>
         <div class="divider"></div>
-        <p class="lead text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi, error. Veniam, deleniti ullam. Inventore esse ab, amet voluptatum corrupti suscipit.</p>
+        <p class="lead text-secondary">지역 별 맛집을 소개 합니다</p>
       </div>
       <div class="row gallery-body">
+
         <div class="col-md-4 col-sm-6 mb-4 gallery-item">
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
@@ -260,6 +197,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-4 col-sm-6 mb-4 gallery-item">
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
@@ -268,6 +206,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-4 col-sm-6 mb-4 gallery-item">
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
@@ -276,6 +215,61 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-4 gallery-item">
+          <div class="card card-body border-0 p-0">
+            <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
+              <h2 class="gallery-title">제주</h2>
+              <a class="link-warning text-decoration-none" href="#">제주 맛집 리스트</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -287,61 +281,29 @@
   <div class="section-content">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 mb-4 text-center footer-1">
-          <!-- <img src="./assets/images/bootstrap-big-logo.png" alt="Logo" class="img-fluid footer-logo"> -->
-          <div class="sns mt-4">
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-facebook.png" alt="Facebook" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-instagram.png" alt="Instagram" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-twitter.png" alt="Twitter" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-youtube.png" alt="Youtube" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-naver-block.png" alt="Naver blog" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="img/icon-kakao-channel.png" alt="Kakao Channel" width="38px">
-            </a>
-          </div>
-        </div>
         <div class="col-md-3 mb-4 footer-2">
-          <h4 class="mb-4">Footer 2</h4>
+          <h4 class="mb-4">문의 전화</h4>
           <ul>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
+            <li> <i class="fas fa-phone-square-alt"></i> 대표 전화:  010-8246-0887</li>
+            <li> <i class="fas fa-phone-square-alt"></i> 고객 센터:  02-1234-5678</li>
+            <li> <i class="fas fa-phone-square-alt"></i> 이메일:  kms1997@naver.com</li>
           </ul>
         </div>
         <div class="col-md-3 mb-4 footer-3">
-          <h4 class="mb-4">Footer 3</h4>
+          <h4 class="mb-4">홍보 문의</h4>
           <ul>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
+            <li><i class="fas fa-user"></i> 홍보팀 담당자: 김민성</li>
+            <li><i class="fas fa-phone-square-alt"></i> 홍보팀 전화: 02-1234-5678</li>
           </ul>
         </div>
         <div class="col-md-3 mb-4 footer-4">
           <h4 class="mb-4">Our Infos</h4>
           <div class="info-body">
             <p class="mb-2">
-              <i class="fas fa-user"></i> CEO: Hong Gil-dong
+              <i class="fas fa-user"></i> CEO: KIM MIN SUNG
             </p>
             <p class="mb-2">
-              <i class="fas fa-map-marked-alt"></i> Address: 11-111 Jung-gu Gil-dong Seoul Korea
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-phone-square-alt"></i> Telephone: 02-111-1111
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-hospital"></i> Registered Business Number: 111-11-1111
+              <i class="fas fa-map-marked-alt"></i> Address: 서울시 마포대로 111
             </p>
           </div>
         </div>

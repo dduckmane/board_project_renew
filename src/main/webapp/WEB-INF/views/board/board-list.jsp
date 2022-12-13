@@ -110,33 +110,7 @@
 <body>
 
 <!-- header 시작 -->
-<nav class="py-2 bg-light border-bottom">
-  <div class="container d-flex flex-wrap">
-    <ul class="nav me-auto">
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">글쓰기</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">리스트 보기</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">About</a></li>
-    </ul>
-    <ul class="nav">
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">로그인</a></li>
-      <li class="nav-item"><a href="#" class="nav-link link-dark px-2">회원가입</a></li>
-    </ul>
-  </div>
-</nav>
 
-<header class="py-3 mb-4 border-bottom">
-  <div class="container d-flex flex-wrap justify-content-center">
-    <a href="#" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-      <!-- <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg> -->
-      <span class="fs-4">🍴Matjip</span>
-    </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-      <input type="search" class="form-control" placeholder="지역, 식당 또는 음식" aria-label="Search">
-    </form>
-  </div>
-</header>
 <!-- header 종료 -->
 
 
@@ -144,130 +118,48 @@
 <div class="b-example-divider"></div>
 <!-- 리스트 시작 -->
 <a href="/user/board/save/${groupId}">글쓰기</a>
-<div>
+<div class="row">
   <c:forEach var="item" varStatus="status" items="${BoardDtoList}">
-    <a href="/user/board/${item.id}">
-  <div class="col-md">
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">${item.subTitle}</h5>
-            <p class="card-text">
-              This is a wider card with supporting text below as a natural lead-in to additional content. This content
-              is a
-              little bit longer.
-            </p>
-            <p class="card-text">
-              작성자: ${item.name} 조회수: ${item.viewCnt} <c:if test="${item.newArticle}">NEW</c:if>
-
-            </p>
+      <div class="col-md-3 col-sm-6 p-0">
+         <a href="/user/board/${item.id}">
+          <div class="col-md">
+            <div class="card mb-3 p-0">
+               <img data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image">
+               <div class="card-body m-0 d-flex flex-column justify-content-center align-items-center">
+                  <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
+                  <p class="card-text">
+                      작성자: ${item.name} 조회수: ${item.viewCnt}
+                  </p>
+               </div>
+            </div>
           </div>
-        </div>
+         </a>
       </div>
-    </div>
-  </div>
-    </a>
   </c:forEach>
 </div>
 
+<!-- pagination 시작 -->
 <div class="container mt-3">
-
   <ul class="pagination justify-content-center">
-
-  <c:if test="${not pageMaker.first}">
-    <li class="page-item"><a class="page-link" href="">이전</a></li>
-  </c:if>
+    <c:if test="${not pageMaker.first}">
+      <li class="page-item"><a class="page-link" href="">이전</a></li>
+    </c:if>
 
     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-
-          <li class="page-item ${pageMaker.nowPage == num ? 'active' : ''}"><a class="page-link" href="/user/board/list/1?page=${num-1}">${num}</a></li>
-
+      <li class="page-item ${pageMaker.nowPage == num ? 'active' : ''}"><a class="page-link" href="/user/board/list/1?page=${num-1}">${num}</a></li>
     </c:forEach>
 
-  <c:if test="${not pageMaker.last}">
+    <c:if test="${not pageMaker.last}">
       <li class="page-item"><a class="page-link" href="">다음</a></li>
-   </c:if>
-
+    </c:if>
   </ul>
 </div>
-
 <!-- pagination 종료 -->
 
 
 
 
-
 <!-- footer 시작 -->
-<footer id="footer">
-  <div class="section-content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 mb-4 text-center footer-1">
-          <!-- <img src="./assets/images/bootstrap-big-logo.png" alt="Logo" class="img-fluid footer-logo"> -->
-          <div class="sns mt-4">
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-facebook.png" alt="Facebook" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-instagram.png" alt="Instagram" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-twitter.png" alt="Twitter" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-youtube.png" alt="Youtube" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-naver-block.png" alt="Naver blog" width="38px">
-            </a>
-            <a target="_blank" href="#" class="mx-1 text-decoration-none social">
-              <img src="/img/icon-kakao-channel.png" alt="Kakao Channel" width="38px">
-            </a>
-          </div>
-        </div>
-        <div class="col-md-3 mb-4 footer-2">
-          <h4 class="mb-4">Footer 2</h4>
-          <ul>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-4 footer-3">
-          <h4 class="mb-4">Footer 3</h4>
-          <ul>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-            <li>Lorem ipsum dolor sit.</li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-4 footer-4">
-          <h4 class="mb-4">Our Infos</h4>
-          <div class="info-body">
-            <p class="mb-2">
-              <i class="fas fa-user"></i> CEO: Hong Gil-dong
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-map-marked-alt"></i> Address: 11-111 Jung-gu Gil-dong Seoul Korea
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-phone-square-alt"></i> Telephone: 02-111-1111
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-hospital"></i> Registered Business Number: 111-11-1111
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
 
 <!-- footer 종료 -->
 
@@ -284,40 +176,23 @@
 
 <script>
 
-  function get(){
-
-  }
-
   function showImage(){
 
     const $thumbList = document.querySelectorAll('img[data-item-id]');
-    console.log($thumbList);
     for (let $thumb of [...$thumbList]) {
       let itemId = $thumb.dataset.itemId;
-      console.log('f:',itemId);
-
-      console.log('thumb:',$thumb);
         fetch('/images?itemId=' + itemId)
                 .then(res => res.blob())
                 .then(img => {
-
-                  console.log('blob:', img);
-
                   const url = URL.createObjectURL(img);
                   $thumb.src = url;
                 });
-
     }
-
   }
 
   (function (){
     showImage();
-
-
   })();
 </script>
-
 </body>
-
 </html>
