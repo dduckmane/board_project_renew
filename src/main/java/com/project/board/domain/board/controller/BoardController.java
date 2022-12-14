@@ -38,6 +38,7 @@ public class BoardController {
     private static final String UPLOAD_PATH = "C:\\sl_dev\\upload";
 
     @GetMapping("/list/{groupId}")
+    //제목으로 검색 추가
     public String main(@PathVariable int groupId, BoardSearchCondition searchCondition,
                                @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable, Model model){
         Page<BoardDto> result = boardRepository.searchAllCondition(groupId, searchCondition, pageable).map(BoardDto::new);

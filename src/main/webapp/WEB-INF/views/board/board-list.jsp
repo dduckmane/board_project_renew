@@ -4,120 +4,60 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-        integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-        integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="assets/css/app.css">
-  <title>🍴Matjip</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
-  <style>
-    a {
-      text-decoration: none;
-    }
-    .card {
-      --bs-blue: #007bff;
-      --bs-indigo: #6610f2;
-      --bs-purple: #696cff;
-      --bs-pink: #e83e8c;
-      --bs-red: #ff3e1d;
-      --bs-orange: #fd7e14;
-      --bs-yellow: #ffab00;
-      --bs-green: #71dd37;
-      --bs-teal: #20c997;
-      --bs-cyan: #03c3ec;
-      --bs-white: #fff;
-      --bs-gray-dark: rgba(67, 89, 113, 0.8);
-      --bs-gray-25: rgba(67, 89, 113, 0.025);
-      --bs-gray-50: rgba(67, 89, 113, 0.05);
-      --bs-primary: #696cff;
-      --bs-secondary: #8592a3;
-      --bs-success: #71dd37;
-      --bs-info: #03c3ec;
-      --bs-warning: #ffab00;
-      --bs-danger: #ff3e1d;
-      --bs-light: #fcfdfd;
-      --bs-dark: #233446;
-      --bs-gray: rgba(67, 89, 113, 0.1);
-      --bs-primary-rgb: 105, 108, 255;
-      --bs-secondary-rgb: 133, 146, 163;
-      --bs-success-rgb: 113, 221, 55;
-      --bs-info-rgb: 3, 195, 236;
-      --bs-warning-rgb: 255, 171, 0;
-      --bs-danger-rgb: 255, 62, 29;
-      --bs-light-rgb: 252, 253, 253;
-      --bs-dark-rgb: 35, 52, 70;
-      --bs-gray-rgb: 67, 89, 113;
-      --bs-white-rgb: 255, 255, 255;
-      --bs-black-rgb: 67, 89, 113;
-      --bs-body-color-rgb: 105, 122, 141;
-      --bs-body-bg-rgb: 245, 245, 249;
-      --bs-font-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-      --bs-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-      --bs-root-font-size: 16px;
-      --bs-body-font-family: var(--bs-font-sans-serif);
-      --bs-body-font-size: 0.9375rem;
-      --bs-body-font-weight: 400;
-      --bs-body-line-height: 1.53;
-      --bs-body-color: #697a8d;
-      --bs-body-bg: #f5f5f9;
-      color-scheme: light;
-      font-family: var(--bs-body-font-family);
-      font-size: var(--bs-body-font-size);
-      font-weight: var(--bs-body-font-weight);
-      line-height: var(--bs-body-line-height);
-      color: var(--bs-body-color);
-      text-align: var(--bs-body-text-align);
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: rgba(67,89,113,0);
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      --bs-gutter-x: 1.625rem;
-      --bs-gutter-y: 0;
-      box-sizing: border-box;
-      width: 80%;
-      max-width: 80%;
-      padding-right: calc(var(--bs-gutter-x)*.5);
-      padding-left: calc(var(--bs-gutter-x)*.5);
-      margin-top: var(--bs-gutter-y);
-      flex: 1 0 0%;
-      float: none;
-      margin: 0 auto
-    }
-
-
-
-  </style>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%--  bootstrap--%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <%--  fontawesom--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <%--  slick--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <%--  slick--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>🍴Matjip</title>
+    <%--  custom css--%>
+    <link rel="stylesheet" href="/css/boardList.css">
 </head>
-
+<style>
+    a.btn {
+        font-size: 1rem;
+    }
+</style>
 <body>
 
-<!-- header 시작 -->
+<%@ include file="/WEB-INF/views/include/nav.jsp" %>
 
-<!-- header 종료 -->
+<section id="top">
+    <div class="section-content overlay d-flex justify-content-center align-items-center">
+        <div class="container-xxl">
+            <div class="row align-items-center">
+                <div class="col-md-9 welcome main-title">
+                    <h1 class="welcome-title fw-light">&nbsp 한식 페이지에 오신걸 환영합니다.</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="btn btn-outline-success navbar-brand" href="/user/board/save/${groupId}">글쓰기</a>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div style = "padding: 3rem 3rem;"></div>
 
-
-
-<div class="b-example-divider"></div>
 <!-- 리스트 시작 -->
-<a href="/user/board/save/${groupId}">글쓰기</a>
 <div class="row">
   <c:forEach var="item" varStatus="status" items="${BoardDtoList}">
       <div class="col-md-3 col-sm-6 p-0">
@@ -128,7 +68,7 @@
                <div class="card-body m-0 d-flex flex-column justify-content-center align-items-center">
                   <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
                   <p class="card-text">
-                      작성자: ${item.name} 조회수: ${item.viewCnt}
+                      조회수: ${item.viewCnt}
                   </p>
                </div>
             </div>
@@ -156,11 +96,8 @@
 </div>
 <!-- pagination 종료 -->
 
-
-
-
 <!-- footer 시작 -->
-
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <!-- footer 종료 -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -173,7 +110,6 @@
         integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/js/app.js"></script>
-
 <script>
 
   function showImage(){
