@@ -3,6 +3,18 @@
 @import url(all.min.css);
 @import url(normalize.css);
 
+/*font*/
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+h1,
+h2,
+h3,
+.title {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 
 /* Global */
 .section-content {

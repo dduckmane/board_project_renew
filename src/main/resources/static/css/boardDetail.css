@@ -3,6 +3,18 @@
 @import url(all.min.css);
 @import url(normalize.css);
 
+/*font*/
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+h1,
+h2,
+h3,
+.title {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 #top {
 
     background-image: url('../img/food/kor/KakaoTalk_20221103_061409896_02.jpg');
@@ -72,4 +84,28 @@
 .pagination .page-item:hover a {
     background: #888 !important;
     color: #fff !important;
+}
+
+.section-content .containerCustom {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (min-width: 768px) {
+    .containerCustom {
+        width: 670px;
+    }
+}
+
+@media (min-width: 992px) {
+    .containerCustom {
+        width: 800px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .containerCustom {
+        width: 940px;
+    }
 }

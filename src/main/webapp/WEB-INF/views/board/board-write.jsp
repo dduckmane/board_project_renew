@@ -3,55 +3,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%--  bootstrap--%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <%--  fontawesom--%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <%--  slick--%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <%--  slick--%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <%@ include file="../include/static-head.jsp" %>
+    <link rel="stylesheet" href="/css/boardWrite.css">
     <title>🍴Matjip</title>
 
-  <link rel="stylesheet" href="/css/boardWrite.css">
-
 </head>
-
-<style>
-    .section-content .containerCustom {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-    @media (min-width: 768px) {
-        .containerCustom {
-            width: 750px;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .containerCustom {
-            width: 900px;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .containerCustom {
-            width: 1000px;
-        }
-    }
-</style>
 
 <body>
 
@@ -76,9 +32,11 @@
 
     <div class="section-content d-flex justify-content-center align-items-center">
         <div class="containerCustom">
+
+
             <div class="mb-3">
                 <input class="form-control" type="file" id="formFile"  name="thumbNail">
-                <label for="formFile" class="form-label"> &nbsp 썸네일 사진을 골라주세요</label>
+                <label for="formFile" class="form-label explain"> &nbsp * 썸네일 사진을 골라주세요 *</label>
             </div>
 
             <div class="input-group mb-3">
@@ -86,11 +44,30 @@
                 <input type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
 
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect04">대표 지역</label>
+                <select class="form-select" name="regions" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default2">상세 위치</span>
+                <input id="location" onkeyup='printLocation()' type="text" name="location" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default2"
+                placeholder="주소로 검색 ex) 제주특별자치도 제주시 첨단로 242"
+                >
+            </div>
+
+            <div id="map" class="mb-3" style="width:100%;height:350px;"></div>
+
             <textarea id="content" name="content"></textarea>
 
             <div class="mb-3">
                 <input class="form-control" type="file" multiple="multiple" id="formFileMultiple" name="attachFiles">
-                <label for="formFileMultiple" class="form-label"> &nbsp 첨부파일은 다중으로 선택 하실 수 있습니다.(단 한번에 올려야 합니다.) </label>
+                <label for="formFileMultiple" class="form-label explain"> &nbsp * 첨부파일은 다중으로 선택 하실 수 있습니다.(단 한번에 올려야 합니다.) *</label>
             </div>
 
             <button type="submit" class="btn btn-primary">글등록</button>
@@ -98,6 +75,10 @@
     </div>
     <input type="hidden" name="groupId" value="${groupId}">
 </form>
+
+<div style = "padding: 3rem 3rem;"></div>
+
+
 
 <!-- footer 시작 -->
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
@@ -109,6 +90,60 @@
             {
               filebrowserUploadUrl:'/food/imageUpload.do'
             });
+</script>
+<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=33596d28073e490ff8a0bf0fd3c448fb&libraries=services"></script>
+<script>
+    let locationInfo=null;
+
+    function printLocation()  {
+        locationInfo = document.getElementById('location').value;
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(locationInfo, function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">위치</div>'
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+
+    }
+
+
+
+
+    // 메인 실행부
+    (function () {
+        printLocation();
+    })();
 </script>
 
 </body>

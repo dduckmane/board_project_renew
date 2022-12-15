@@ -32,12 +32,10 @@
         <div class="col-md-3 mb-4 footer-4">
           <h4 class="mb-4">Our Infos</h4>
           <div class="info-body">
-            <p class="mb-2">
-              <i class="fas fa-user"></i> CEO: KIM MIN SUNG
-            </p>
-            <p class="mb-2">
-              <i class="fas fa-map-marked-alt"></i> Address: 서울시 마포대로 111
-            </p>
+            <ul>
+              <li><i class="fas fa-user"></i> CEO: KIM MIN SUNG</li>
+              <li><i class="fas fa-map-marked-alt"></i> Address: 서울시 마포대로 111</li>
+            </ul>
           </div>
         </div>
       </div>
