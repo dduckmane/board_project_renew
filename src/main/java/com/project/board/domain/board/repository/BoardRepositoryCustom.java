@@ -7,5 +7,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface BoardRepositoryCustom {
 
-    Page<Board>searchAllCondition(int groupId, BoardSearchCondition searchCondition, Pageable pageable);
+    Page<Board> searchAllCondition(int groupId, BoardSearchCondition searchCondition, Pageable pageable);
+
+    Page<Board> searchBestInfo(Pageable pageable);
+
 }

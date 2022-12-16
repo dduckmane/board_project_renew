@@ -17,6 +17,15 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 <%--  custom css--%>
   <link rel="stylesheet" href="css/app.css">
+
+  <style>
+    #image {
+      width: 250px;
+      height: 250px;
+      object-fit: fill;
+    }
+  </style>
+
   <title>🍴Matjip</title>
 </head>
 
@@ -44,105 +53,27 @@
   </div>
 </section>
 
-
 <section id="services">
   <div class="section-content">
     <div class="container services">
       <div class="services-header text-center mb-5">
-        <h1 class="display-5">올해의 맛집</h1>
+        <h1 class="display-5">맛집 BEST</h1>
         <div class="divider"></div>
       </div>
       <div id="slick-slide" class="sercives-body">
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              <h3>글의 제목</h3>
-              <p>조회수</p>
+        <c:forEach var="item" items="${items}">
+          <div class="services-col mx-2 my-3">
+            <div class="card">
+              <div class="overlay d-flex flex-column justify-content-center align-items-center">
+                <h3>${item.name}</h3>
+                <p>조회수 ${item.viewCnt}</p>
+              </div>
+              <a href="#">
+                <img id="image" src="/images?itemId=${item.itemId}" alt="" class="card-img-top" width="250px" height="250px">
+              </a>
             </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
           </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
-        <div class="services-col mx-2 my-3">
-          <div class="card">
-            <div class="overlay d-flex flex-column justify-content-center align-items-center">
-              안녕하세요
-            </div>
-            <a href="#">
-              <img src="img/food/ch/KakaoTalk_20221103_061416584.jpg" alt="" width="50rem" height="230vw" class="card-img-top">
-            </a>
-          </div>
-        </div>
-
+        </c:forEach>
       </div>
     </div>
   </div>

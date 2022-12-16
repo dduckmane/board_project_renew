@@ -6,6 +6,13 @@
 <head>
     <%@ include file="../include/static-head.jsp" %>
     <link rel="stylesheet" href="/css/boardDetail.css">
+    <style>
+        .divider {
+            width: 10%;
+            margin: 2rem auto;
+            border-top: 0.5rem solid rgb(248, 226, 59);
+        }
+    </style>
 </head>
 <body>
 
@@ -54,17 +61,19 @@
                     <a href="http://localhost:8080/user/board/delete/${boardDetailsDto.id}">
                         <button class="btn btn-primary" type="button">삭제</button>
                     </a>
-
-                </div>
-                    <div class="input-group mt-3">
-                        <span class="input-group-text" id="inputGroup-sizing-default">위치</span>
-                        <input type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <%--위치 버튼--%>
                     </div>
-                <div id="map" class="mb-3" style="width:100%;height:200px;"></div>
+                        <div class="input-group mt-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">위치</span>
+                            <input type="text" name="title" class="form-control" value="${boardDetailsDto.detailArea}"
+                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                        </div>
+                    <div id="map" class="mb-3" style="width:100%;height:200px;"></div>
                 <%--    content 영역--%>
                 <div class="d-flex justify-content-center align-items-center">
                     <h2>REVIEW</h2>
                 </div>
+                    <div class="divider"></div>
                 <div>
                     ${boardDetailsDto.content}
                 </div>
@@ -89,19 +98,15 @@
                                           placeholder="댓글을 입력해주세요."></textarea>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="newReplyWriter" hidden>댓글 작성자</label>
-                                <input id="newReplyWriter" name="replyWriter" type="text" class="form-control"
-                                       placeholder="MatJip 댓글란" style="margin-bottom: 6px;" disabled>
-                                <button id="replyAddBtn" type="button"
-                                        class="btn btn-dark form-control">등록
-                                </button>
-                            </div>
+                        <div class="col-md-3 d-flex  align-items-center">
+                            <button id="replyAddBtn" type="button"
+                                    class="btn btn-dark form-control">등록
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- end reply write -->
 
             <!--댓글 내용 영역-->
@@ -292,7 +297,7 @@
         // 각 댓글 하나의 태그
         let tag = '';
         if (content === null || content.length === 0) {
-            tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>";
+            tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다</div>";
         } else {
             for (let replyDto of content) {
                 tag += "<div id='replyContent' class='card-body' data-replyId='" + replyDto.id + "'>" +
@@ -373,7 +378,6 @@
             .then(msg => {
                 alert('댓글 등록 성공');
                 // 댓글 입력창 리셋
-                $writerInput.value = '';
                 $contentInput.value = '';
                 // 댓글 목록 재요청
                 showReplies(document.querySelector('.pagination').dataset.fp);

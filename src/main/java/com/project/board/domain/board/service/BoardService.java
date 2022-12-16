@@ -1,5 +1,6 @@
 package com.project.board.domain.board.service;
 
+import com.project.board.domain.board.domain.Address;
 import com.project.board.domain.board.domain.Board;
 import com.project.board.domain.board.domain.BoardFiles;
 import com.project.board.domain.board.domain.UploadFile;
@@ -32,11 +33,12 @@ public class BoardService {
             , String title
             , String content
             , UploadFile thumbNail
+            , Address address
             , List<UploadFile>uploadFiles
     ){
         List<BoardFiles> attachFiles = uploadFiles.stream().map(BoardFiles::new).collect(Collectors.toList());
 
-        Board saveBoard = Board.write(member, groupId, title, content,thumbNail,attachFiles);
+        Board saveBoard = Board.write(member, groupId, title, content,thumbNail,address,attachFiles);
         boardRepository.save(saveBoard);
     }
 

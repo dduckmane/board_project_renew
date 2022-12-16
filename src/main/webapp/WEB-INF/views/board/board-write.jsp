@@ -6,7 +6,6 @@
     <%@ include file="../include/static-head.jsp" %>
     <link rel="stylesheet" href="/css/boardWrite.css">
     <title>🍴Matjip</title>
-
 </head>
 
 <body>
@@ -36,7 +35,7 @@
 
             <div class="mb-3">
                 <input class="form-control" type="file" id="formFile"  name="thumbNail">
-                <label for="formFile" class="form-label explain"> &nbsp * 썸네일 사진을 골라주세요 *</label>
+                <label for="formFile" class="form-label explain"> &nbsp * 썸네일 사진을 골라주세요 (250*250) *</label>
             </div>
 
             <div class="input-group mb-3">
@@ -46,17 +45,51 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect04">대표 지역</label>
-                <select class="form-select" name="regions" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select" name="representativeArea" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option value="Seoul">서울</option>
+                    <option value="gyeonggiDo">경기</option>
+                    <option value="incheon">인천</option>
+                    <option value="gangwonDo">강원도</option>
+                    <option value="jeollaBukDo">전라북도</option>
+                    <option value="jeollaNamDo">전라남도</option>
+                    <option value="gyeongsangBukDo">경상북도</option>
+                    <option value="gyeongsangNamDo">경상남도</option>
+                    <option value="chungcheongDo">충청도</option>
                 </select>
+
+                <input type="radio" class="btn-check" name="options" id="option" disabled>
+                <label class="btn btn-outline-secondary" for="option">태그설정</label>
+
+                <input type="checkbox" class="btn-check" name="options" id="option1">
+                <label class="btn btn-outline-secondary" for="option1">분위기</label>
+
+                <input type="checkbox" class="btn-check" name="options" id="option2">
+                <label class="btn btn-outline-secondary" for="option2">가성비</label>
+
+                <input type="checkbox" class="btn-check" name="options" id="option3">
+                <label class="btn btn-outline-secondary" for="option3">예약 가능</label>
+
+                <input type="checkbox" class="btn-check" name="options" id="option4">
+                <label class="btn btn-outline-secondary" for="option4">놀기 좋은</label>
+
+
             </div>
+
+            <div class="input-group">
+                <button type="button" class="btn btn-outline-secondary" style="color: black">가격 설정</button>
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <input type="range" min="0" max="100000" step="1000" class="slider" id="myRange">
+                </ul>
+                <input id="value" type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+            </div>
+            <p class="explain"> 버튼을 눌러 대략적인 평균 금액을 설정하세요</p>
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-default2">상세 위치</span>
-                <input id="location" onkeyup='printLocation()' type="text" name="location" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default2"
+                <input id="location" onkeyup='printLocation()' type="text" name="detailArea" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default2"
                 placeholder="주소로 검색 ex) 제주특별자치도 제주시 첨단로 242"
                 >
             </div>
@@ -92,6 +125,9 @@
             });
 </script>
 <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=33596d28073e490ff8a0bf0fd3c448fb&libraries=services"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
     let locationInfo=null;
 
@@ -136,13 +172,21 @@
         });
 
     }
+    function slider(){
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("value");
+        output.value = slider.value;
 
-
-
+        slider.oninput = function() {
+            output.value = this.value;
+        }
+    }
 
     // 메인 실행부
     (function () {
         printLocation();
+        slider();
+
     })();
 </script>
 

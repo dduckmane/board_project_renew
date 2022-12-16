@@ -1,10 +1,11 @@
 package com.project.board.domain.board.controller;
 
+import com.project.board.domain.board.domain.Address;
 import com.project.board.domain.board.domain.UploadFile;
-import com.project.board.domain.board.dto.BoardDetailsDto;
-import com.project.board.domain.board.dto.BoardDto;
-import com.project.board.domain.board.dto.BoardSaveForm;
-import com.project.board.domain.board.dto.BoardUpdateForm;
+import com.project.board.domain.board.dto.request.BoardDetailsDto;
+import com.project.board.domain.board.dto.request.BoardDto;
+import com.project.board.domain.board.dto.request.BoardSaveForm;
+import com.project.board.domain.board.dto.request.BoardUpdateForm;
 import com.project.board.domain.board.repository.BoardRepository;
 import com.project.board.domain.board.search.BoardSearchCondition;
 import com.project.board.domain.board.service.BoardService;
@@ -39,13 +40,14 @@ public class BoardController {
 
     @GetMapping("/list/{groupId}")
     //제목으로 검색 추가
-    public String main(@PathVariable int groupId, BoardSearchCondition searchCondition,
-                               @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable, Model model){
+    public String main(
+            @PathVariable int groupId
+            , BoardSearchCondition searchCondition
+            , @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable
+            , Model model
+    ){
         Page<BoardDto> result = boardRepository.searchAllCondition(groupId, searchCondition, pageable).map(BoardDto::new);
 
-
-        System.out.println("result.getTotalPages() = " + result.getTotalPages());
-        
         int nowPage = result.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, result.getTotalPages());
@@ -60,7 +62,12 @@ public class BoardController {
         return "board/board-list";
     }
     @GetMapping("/{boardId}")
-    public String board(@PathVariable Long boardId, HttpServletResponse response, HttpServletRequest request,Model model){
+    public String board(
+            @PathVariable Long boardId
+            , HttpServletResponse response
+            , HttpServletRequest request
+            ,Model model
+    ){
         BoardDetailsDto boardDetailsDto = boardService
                 .findOne(boardId, response, request)
                 .map(BoardDetailsDto::new).orElseThrow();
@@ -75,7 +82,11 @@ public class BoardController {
         return "board/board-write";}
 
     @PostMapping("/save/{groupId}")
-    public String save(@AuthenticationPrincipal PrincipalDetails principalDetails, @ModelAttribute BoardSaveForm boardSaveForm, @RequestParam int groupId, RedirectAttributes redirectAttributes){
+    public String save(
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+            , @ModelAttribute BoardSaveForm boardSaveForm
+            , @RequestParam int groupId
+            , RedirectAttributes redirectAttributes){
 
         log.info("/user/board/save POST");
         Member member = principalDetails.getMember();
@@ -84,7 +95,20 @@ public class BoardController {
 
         List<UploadFile> uploadFiles = UploadFile.storeFiles(boardSaveForm.getAttachFiles(), UPLOAD_PATH);
 
-        boardService.save(member,groupId,boardSaveForm.getTitle(),boardSaveForm.getContent(),uploadFile,uploadFiles);
+        boardService.save(
+                member
+                ,groupId
+                ,boardSaveForm.getTitle()
+                ,boardSaveForm.getContent()
+                ,uploadFile
+                ,new Address(
+                        boardSaveForm.getRepresentativeArea()
+                        ,boardSaveForm.getDetailArea())
+                ,uploadFiles);
+
+        System.out.println("boardSaveForm = " + boardSaveForm.getRepresentativeArea());
+        System.out.println("boardSaveForm = " + boardSaveForm.getDetailArea());
+
         return "redirect:/user/board/list/{groupId}";
     }
     @GetMapping("/edit/{boardId}")

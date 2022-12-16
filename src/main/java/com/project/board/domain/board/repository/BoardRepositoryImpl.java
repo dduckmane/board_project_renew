@@ -1,7 +1,11 @@
 package com.project.board.domain.board.repository;
 
 import com.project.board.domain.board.domain.Board;
+import com.project.board.domain.board.domain.QBoard;
+import com.project.board.domain.board.dto.response.BestDto;
+import com.project.board.domain.board.dto.response.QBestDto;
 import com.project.board.domain.board.search.BoardSearchCondition;
+import com.project.board.domain.member.domain.QMember;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -27,11 +31,11 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     }
     @Override
     public Page<Board> searchAllCondition(int groupId, BoardSearchCondition searchCondition, Pageable pageable) {
+
         List<Board> result = queryFactory
                 .select(board).distinct()
                 .from(board)
                 .join(board.member,member).fetchJoin()
-//                .leftJoin(board.replies,reply)
                 .where(
                         usernameOrTitleEq(searchCondition.getAll())
                         ,usernameEq(searchCondition.getName())
@@ -41,20 +45,41 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 .orderBy(boardSort(pageable))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch();
+                .fetch()
+                ;
         JPAQuery<Long> CountQuery = queryFactory
                 .select(board.count()).distinct()
                 .from(board)
                 .join(board.member,member)
-//                .join(board.replies,reply)
                 .where(
                         usernameOrTitleEq(searchCondition.getAll())
                         ,usernameEq(searchCondition.getName())
                         ,titleEq(searchCondition.getTitle())
                         ,board.groupId.eq(groupId)
                 );
+
         return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
     }
+
+    public Page<Board> searchBestInfo(Pageable pageable) {
+        List<Board> result = queryFactory
+                .selectFrom(board)
+                .orderBy(board.viewCnt.desc())
+                .offset(pageable.getOffset())
+                .limit(6l)
+                .fetch();
+
+        JPAQuery<Long> CountQuery = queryFactory
+                .select(board.count())
+                .from(board)
+                .offset(pageable.getOffset())
+                .limit(6l)
+                ;
+
+        return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
+    }
+
+
     /**
      * OrderSpecifier 를 쿼리로 반환하여 정렬조건을 맞춰준다.
      * 리스트 정렬
@@ -72,14 +97,16 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 switch (order.getProperty()){
                     case "id":
                         return new OrderSpecifier(direction, board.id);
-                    case "title":
-                        return new OrderSpecifier(direction, board.title);
-                    case "content":
-                        return new OrderSpecifier(direction, board.content);
-                    case "member":
-                        return new OrderSpecifier(direction, board.member.name);
-                    case "createdDate":
-                        return new OrderSpecifier(direction, board.createdDate);
+                    case "titleASC":
+                        return new OrderSpecifier(Order.ASC, board.title);
+                    case "titleDESC":
+                        return new OrderSpecifier(Order.DESC, board.title);
+                    case "createdDateASC":
+                        return new OrderSpecifier(Order.ASC, board.createdDate);
+                    case "createdDateDESC":
+                        return new OrderSpecifier(Order.DESC, board.createdDate);
+                    case "viewCnt":
+                        return new OrderSpecifier(Order.DESC, board.viewCnt);
                 }
             }
         }

@@ -13,6 +13,21 @@
     a.btn {
         font-size: 1rem;
     }
+    #sortBox, #searchBox, #money, #regions{
+        width: 10rem;
+    }
+    #content {
+        width: 20rem;
+      }
+    #image {
+        width: 25vw;
+        height: 20vw;
+        object-fit: fill;
+    }
+    .card {
+        border: 0px;
+    }
+
 </style>
 <body>
 
@@ -29,34 +44,113 @@
         </div>
     </div>
 </section>
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="btn btn-outline-success navbar-brand" href="/user/board/save/${groupId}">글쓰기</a>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+
+<div class="d-flex container-fluid mt-2">
+    <div class="dropdown">
+        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            필터 적용
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li class="dropdown-item">
+
+                <form class="d-flex" action="/user/board/list/${groupId}">
+
+                    <div id="regions">
+                        <select class="form-select" id="inputGroupSelect4"
+                                aria-label="Example select with button addon"
+                                name="sort">
+
+                            <option value="">가격 대</option>
+                            <option value="createdDateDESC">~10000</option>
+                            <option value="createdDateASC">10000 ~ 20000</option>
+                            <option value="viewCnt">20000 ~ 30000</option>
+                            <option value="viewCnt">30000 ~</option>
+
+                        </select>
+                    </div>
+
+                    <div id="money">
+                        <select class="form-select" id="inputGroupSelect3"
+                                aria-label="Example select with button addon"
+                                name="sort">
+
+                            <option value="">태그로 검색</option>
+                            <option value="createdDateDESC">분위기 좋은</option>
+                            <option value="createdDateASC">가성비</option>
+                            <option value="viewCnt">예약 가능</option>
+
+                        </select>
+                    </div>
+
+                    <div id="sortBox">
+                        <select class="form-select" id="inputGroupSelect2"
+                                aria-label="Example select with button addon"
+                                name="sort">
+
+                            <option value="">정렬</option>
+                            <option value="createdDateDESC">최근 순</option>
+                            <option value="createdDateASC">오래된 순</option>
+                            <option value="viewCnt">조회수 순</option>
+
+                        </select>
+                    </div>
+
+                    <div id="searchBox">
+                        <select class="form-select" id="inputGroupSelect"
+                                aria-label="Example select with button addon"
+                                onchange="searchCondition()" onclick="selected()">
+
+                            <option class="opt" value="">검색 필터</option>
+                            <option class="opt" value="title">제목</option>
+                            <option class="opt" value="name">작성자</option>
+                            <option class="opt" value="all">작성자+제목</option>
+
+                        </select>
+                    </div>
+
+                    <input id="content" name="name" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+        </ul>
     </div>
-</nav>
+
+    <div class="ms-auto">
+        <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/${groupId}">글쓰기</a>
+        <a class="btn btn-outline-success navbar-brand" href="/user/board/list/${groupId}">필터 초기화</a>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
 <div style = "padding: 3rem 3rem;"></div>
 
 <!-- 리스트 시작 -->
 <div class="row">
   <c:forEach var="item" varStatus="status" items="${BoardDtoList}">
       <div class="col-md-3 col-sm-6 p-0">
-         <a href="/user/board/${item.id}">
           <div class="col-md">
-            <div class="card mb-3 p-0">
-               <img data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image">
-               <div class="card-body m-0 d-flex flex-column justify-content-center align-items-center">
-                  <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
-                  <p class="card-text">
-                      조회수: ${item.viewCnt}
-                  </p>
-               </div>
-            </div>
+              <div class="card mb-3 p-0">
+                  <a href="/user/board/${item.id}">
+                      <img id="image" data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image" >
+                  </a>
+                  <div class="card-body p-1 m-0 d-flex flex-column justify-content-center align-items-center">
+                      <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
+                      <p class="card-text p-0 m-0 text-align">
+                          조회수: ${item.viewCnt}
+                      </p>
+                      <input type="checkbox" class="btn-check" name="options" id="option+${item.id}">
+                      <label class="btn btn-outline-danger p-0" for="option+${item.id}">😍</label>
+                  </div>
+              </div>
           </div>
-         </a>
+
       </div>
   </c:forEach>
 </div>
@@ -83,9 +177,9 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <!-- footer 종료 -->
 
-<script src="/js/app.js"></script>
-
 <script>
+  let condition1=null;
+
   function showImage(){
 
     const $thumbList = document.querySelectorAll('img[data-item-id]');
@@ -99,8 +193,20 @@
                 });
     }
   }
+
+  function searchCondition(){
+      let select = document.getElementById('inputGroupSelect');
+      condition1 = select.options[select.selectedIndex].value;
+
+      let content = document.getElementById('content');
+      content.name=condition1;
+  }
+
+
   (function (){
     showImage();
+    searchCondition();
+
   })();
 </script>
 </body>

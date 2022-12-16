@@ -30,6 +30,8 @@ public class Board extends BaseEntity {
     //썸네일 이미지
     @Embedded
     private UploadFile thumbNail;
+    @Embedded
+    private Address address;
     //첨부파일
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<BoardFiles>attachFiles;
@@ -54,6 +56,7 @@ public class Board extends BaseEntity {
             ,String title
             ,String content
             ,UploadFile thumbNail
+            ,Address address
             , List <BoardFiles> attachFiles
     ){
         Board board = new Board();
@@ -63,6 +66,7 @@ public class Board extends BaseEntity {
         board.groupId=groupId;
         board.content=content;
         board.thumbNail=thumbNail;
+        board.address=address;
 
         member.getBoards().add(board);
 
