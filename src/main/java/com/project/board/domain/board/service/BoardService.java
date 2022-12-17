@@ -1,9 +1,6 @@
 package com.project.board.domain.board.service;
 
-import com.project.board.domain.board.domain.Address;
-import com.project.board.domain.board.domain.Board;
-import com.project.board.domain.board.domain.BoardFiles;
-import com.project.board.domain.board.domain.UploadFile;
+import com.project.board.domain.board.domain.*;
 import com.project.board.domain.board.repository.BoardRepository;
 import com.project.board.domain.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +32,16 @@ public class BoardService {
             , UploadFile thumbNail
             , Address address
             , List<UploadFile>uploadFiles
+            , int price
+            , List<String> tag
+
     ){
         List<BoardFiles> attachFiles = uploadFiles.stream().map(BoardFiles::new).collect(Collectors.toList());
 
-        Board saveBoard = Board.write(member, groupId, title, content,thumbNail,address,attachFiles);
+        String renewTag="";
+        for (String tagName : tag) { renewTag+=","+tagName;}
+
+        Board saveBoard = Board.write(member, groupId, title, content,thumbNail,address,attachFiles,price,renewTag);
         boardRepository.save(saveBoard);
     }
 

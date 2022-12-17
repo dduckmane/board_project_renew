@@ -60,16 +60,16 @@
                 <input type="radio" class="btn-check" name="options" id="option" disabled>
                 <label class="btn btn-outline-secondary" for="option">태그설정</label>
 
-                <input type="checkbox" class="btn-check" name="options" id="option1">
+                <input type="checkbox" class="btn-check" name="tag" value="atmosphere" id="option1">
                 <label class="btn btn-outline-secondary" for="option1">분위기</label>
 
-                <input type="checkbox" class="btn-check" name="options" id="option2">
+                <input type="checkbox" class="btn-check" name="tag" value="money" id="option2">
                 <label class="btn btn-outline-secondary" for="option2">가성비</label>
 
-                <input type="checkbox" class="btn-check" name="options" id="option3">
+                <input type="checkbox" class="btn-check" name="tag" value="reservation" id="option3">
                 <label class="btn btn-outline-secondary" for="option3">예약 가능</label>
 
-                <input type="checkbox" class="btn-check" name="options" id="option4">
+                <input type="checkbox" class="btn-check" name="tag" value="play" id="option4">
                 <label class="btn btn-outline-secondary" for="option4">놀기 좋은</label>
 
 
@@ -83,7 +83,7 @@
                 <ul class="dropdown-menu">
                     <input type="range" min="0" max="100000" step="1000" class="slider" id="myRange">
                 </ul>
-                <input id="value" type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                <input id="value" name="price" type="text" class="form-control" aria-label="Text input with segmented dropdown button">
             </div>
             <p class="explain"> 버튼을 눌러 대략적인 평균 금액을 설정하세요</p>
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -56,17 +57,41 @@
                     </div>
                     <%--수정 버튼--%>
                     <a href="http://localhost:8080/user/board/edit/${boardDetailsDto.id}">
-                        <button class="btn btn-primary me-md-2" type="button">수정</button>
+                        <button class="btn btn-primary" type="button">수정</button>
                     </a>
                     <a href="http://localhost:8080/user/board/delete/${boardDetailsDto.id}">
                         <button class="btn btn-primary" type="button">삭제</button>
                     </a>
-                    <%--위치 버튼--%>
+                </div>
+                    <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default1">제목</span>
+                        <input type="text" value="${boardDetailsDto.title}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default1" disabled>
                     </div>
+
+                    <div class="input-group ">
+                        <span class="input-group-text" id="inputGroup-sizing-default2">가격</span>
+                        <input type="text" value="${boardDetailsDto.price}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default2" disabled>
+
+                        <input type="radio" class="btn-check" name="options" id="option" disabled>
+                        <label class="btn btn-outline-secondary" for="option">태그설정</label>
+
+                        <input type="checkbox" class="btn-check" <c:if test="${fn:contains(boardDetailsDto.tag, 'atmosphere')}" > checked</c:if> id="option1" disabled>
+                        <label class="btn btn-outline-secondary" for="option1">분위기</label>
+
+                        <input type="checkbox" class="btn-check" <c:if test="${fn:contains(boardDetailsDto.tag, 'money')}" > checked</c:if> id="option2" disabled>
+                        <label class="btn btn-outline-secondary" for="option2">가성비</label>
+
+                        <input type="checkbox" class="btn-check" <c:if test="${fn:contains(boardDetailsDto.tag, 'reservation')}" > checked</c:if> id="option3" disabled>
+                        <label class="btn btn-outline-secondary" for="option3">예약 가능</label>
+
+                        <input type="checkbox" class="btn-check" <c:if test="${fn:contains(boardDetailsDto.tag, 'play')}" > checked</c:if> id="option4" disabled>
+                        <label class="btn btn-outline-secondary" for="option4">놀기 좋은</label>
+                    </div>
+                    <%--위치 버튼--%>
                         <div class="input-group mt-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">위치</span>
-                            <input type="text" name="title" class="form-control" value="${boardDetailsDto.detailArea}"
-                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            <span class="input-group-text" id="inputGroup-sizing-default3">위치</span>
+                            <input type="text" id="location" class="form-control" value="${boardDetailsDto.detailArea}"
+                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default3" disabled>
                         </div>
                     <div id="map" class="mb-3" style="width:100%;height:200px;"></div>
                 <%--    content 영역--%>
@@ -172,6 +197,9 @@
 <%@ include file="../include/footer.jsp" %>
 <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=33596d28073e490ff8a0bf0fd3c448fb&libraries=services"></script>
 <script>
+
+    locationInfo = document.getElementById('location').value;
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -185,7 +213,7 @@
     var geocoder = new kakao.maps.services.Geocoder();
 
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch('등촌로 163', function(result, status) {
+    geocoder.addressSearch(locationInfo, function(result, status) {
 
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {

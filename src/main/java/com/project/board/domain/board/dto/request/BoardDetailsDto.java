@@ -20,6 +20,8 @@ public class BoardDetailsDto {
     private String createTime;
     private String detailArea;
     private List<BoardFilesDto> boardFilesDto;
+    private int price;
+    private List<String> tag;
 
     public BoardDetailsDto(Board board) {
         this.id=board.getId();
@@ -30,5 +32,8 @@ public class BoardDetailsDto {
         this.createTime = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         this.detailArea = board.getAddress().getDetailArea();
         this.boardFilesDto = board.getAttachFiles().stream().map(BoardFilesDto::new).collect(Collectors.toList());
+        this.price=board.getPrice();
+        this.tag=board.getTag();
+
     }
 }

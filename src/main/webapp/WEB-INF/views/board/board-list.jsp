@@ -52,19 +52,18 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li class="dropdown-item">
-
                 <form class="d-flex" action="/user/board/list/${groupId}">
 
                     <div id="regions">
                         <select class="form-select" id="inputGroupSelect4"
                                 aria-label="Example select with button addon"
-                                name="sort">
+                                name="price">
 
                             <option value="">가격 대</option>
-                            <option value="createdDateDESC">~10000</option>
-                            <option value="createdDateASC">10000 ~ 20000</option>
-                            <option value="viewCnt">20000 ~ 30000</option>
-                            <option value="viewCnt">30000 ~</option>
+                            <option value="10000">~10000</option>
+                            <option value="20000">10000 ~ 20000</option>
+                            <option value="30000">20000 ~ 30000</option>
+                            <option value="excess">30000 ~</option>
 
                         </select>
                     </div>
@@ -72,12 +71,13 @@
                     <div id="money">
                         <select class="form-select" id="inputGroupSelect3"
                                 aria-label="Example select with button addon"
-                                name="sort">
+                                name="tag">
 
                             <option value="">태그로 검색</option>
-                            <option value="createdDateDESC">분위기 좋은</option>
-                            <option value="createdDateASC">가성비</option>
-                            <option value="viewCnt">예약 가능</option>
+                            <option value="atmosphere">분위기 좋은</option>
+                            <option value="money">가성비</option>
+                            <option value="reservation">예약 가능</option>
+                            <option value="play">놀기 좋은</option>
 
                         </select>
                     </div>
@@ -111,6 +111,7 @@
                     <input id="content" name="name" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+
             </li>
         </ul>
     </div>
@@ -121,13 +122,6 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
 
 <div style = "padding: 3rem 3rem;"></div>
 

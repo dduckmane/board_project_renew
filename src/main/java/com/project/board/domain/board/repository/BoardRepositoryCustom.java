@@ -9,6 +9,8 @@ public interface BoardRepositoryCustom {
 
     Page<Board> searchAllCondition(int groupId, BoardSearchCondition searchCondition, Pageable pageable);
 
+    Page<Board> searchByRegions(String regions, BoardSearchCondition searchCondition, Pageable pageable);
+
     Page<Board> searchBestInfo(Pageable pageable);
 
 }

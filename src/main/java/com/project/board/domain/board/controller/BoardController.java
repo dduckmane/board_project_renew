@@ -72,6 +72,8 @@ public class BoardController {
                 .findOne(boardId, response, request)
                 .map(BoardDetailsDto::new).orElseThrow();
 
+        boardDetailsDto.getTag().stream().forEach(s -> System.out.println("s = " + s));
+
         model.addAttribute("boardDetailsDto",boardDetailsDto);
 
         return "board/board-detail";
@@ -86,29 +88,26 @@ public class BoardController {
             @AuthenticationPrincipal PrincipalDetails principalDetails
             , @ModelAttribute BoardSaveForm boardSaveForm
             , @RequestParam int groupId
-            , RedirectAttributes redirectAttributes){
-
+    ){
         log.info("/user/board/save POST");
         Member member = principalDetails.getMember();
 
         UploadFile uploadFile = UploadFile.createUploadFile(boardSaveForm.getThumbNail(), UPLOAD_PATH);
-
         List<UploadFile> uploadFiles = UploadFile.storeFiles(boardSaveForm.getAttachFiles(), UPLOAD_PATH);
 
         boardService.save(
                 member
-                ,groupId
-                ,boardSaveForm.getTitle()
-                ,boardSaveForm.getContent()
-                ,uploadFile
-                ,new Address(
+                , groupId
+                , boardSaveForm.getTitle()
+                , boardSaveForm.getContent()
+                , uploadFile
+                , new Address(
                         boardSaveForm.getRepresentativeArea()
                         ,boardSaveForm.getDetailArea())
-                ,uploadFiles);
-
-        System.out.println("boardSaveForm = " + boardSaveForm.getRepresentativeArea());
-        System.out.println("boardSaveForm = " + boardSaveForm.getDetailArea());
-
+                , uploadFiles
+                , boardSaveForm.getPrice()
+                , boardSaveForm.getTag()
+        );
         return "redirect:/user/board/list/{groupId}";
     }
     @GetMapping("/edit/{boardId}")
