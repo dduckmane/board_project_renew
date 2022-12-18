@@ -59,4 +59,10 @@ public class Member extends BaseTimeEntity {
         this.provider = provider;
         this.providerId = providerId;
     }
+
+    public void choiceBoard(Boolean choice, Long boardId) {
+        if (choice) choiceBoard.add(boardId);
+        else choiceBoard.remove(boardId);
+    }
+
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"  %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +53,7 @@
     </div>
   </div>
 </section>
-
+${sessionScope.Authentication}
 <section id="services">
   <div class="section-content">
     <div class="container services">

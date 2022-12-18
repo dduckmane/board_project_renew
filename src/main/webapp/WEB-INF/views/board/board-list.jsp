@@ -172,8 +172,8 @@
                             <p class="card-text p-0 m-0 text-align">
                                 조회수: ${item.viewCnt}
                             </p>
-                            <input type="checkbox" class="btn-check" name="options" id="option+${item.id} data-value=${item.id}">
-                            <label class="btn btn-outline-danger p-0" for="option+${item.id}">😍</label>
+                            <input type="checkbox" class="btn-check" name="options" id="${item.id}">
+                            <label class="btn btn-outline-danger p-0" for="${item.id}">😍</label>
                         </div>
                     </div>
                 </div>
@@ -232,9 +232,27 @@
   }
 
   function choiceBoard(){
-      let element = document.querySelector('#boardList .btn-check');
+      let choices = document.querySelectorAll('#boardList .btn-check');
 
-      console.log(element.selected);
+      for(let choice of [...choices]){
+          choice.addEventListener("click",e=>{
+              const choiceData = {
+                  boardId: choice.id
+                  , choice: choice.checked
+              }
+              const reqInfo = {
+                  method: 'POST'
+                  , headers: {
+                      'content-type': 'application/json'
+
+                  }
+                  , body: JSON.stringify(choiceData)
+
+              }
+              fetch('/user/board/',reqInfo);
+          })
+      }
+
   }
 
 
