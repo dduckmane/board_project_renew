@@ -13,8 +13,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void choiceBoard(Long boardId, Boolean choice, Member member) {
+    public void choiceBoard(Long boardId, Member member) {
         Member findMember = memberRepository.findByUsername(member.getUsername()).orElseThrow();
-        findMember.choiceBoard(choice, boardId);
+        findMember.choiceBoard(boardId);
     }
 }

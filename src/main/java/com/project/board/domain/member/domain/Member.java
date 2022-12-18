@@ -60,9 +60,13 @@ public class Member extends BaseTimeEntity {
         this.providerId = providerId;
     }
 
-    public void choiceBoard(Boolean choice, Long boardId) {
-        if (choice) choiceBoard.add(boardId);
-        else choiceBoard.remove(boardId);
-    }
+    public void choiceBoard(Long boardId) {
+        Long findBoardId = choiceBoard.stream().filter(id -> id == boardId).findFirst().orElse(null);
 
+        if(findBoardId==null){
+            choiceBoard.add(boardId);
+        }else{
+            choiceBoard.remove(boardId);
+        }
+    }
 }

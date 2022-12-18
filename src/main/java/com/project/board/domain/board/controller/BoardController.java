@@ -143,4 +143,5 @@ public class BoardController {
         boardService.delete(boardId);
         return "redirect:/";
     }
+
 }

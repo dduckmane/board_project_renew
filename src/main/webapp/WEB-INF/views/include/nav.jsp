@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"  %>
+
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #c4c4c4e3;">
   <div class="container-fluid">
@@ -20,12 +22,19 @@
 
       <ul class="navbar-nav">
 
-        <li class="nav-item"><a href="#" class="nav-link link-light px-2">로그인</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-light px-2">회원가입</a></li>
-
+        <c:if test="${empty pageContext.request.userPrincipal }">
+          <li class="nav-item"><a href="/login" class="nav-link link-light px-2">로그인</a></li>
+          <li class="nav-item"><a href="#" class="nav-link link-light px-2">회원가입</a></li>
+        </c:if>
+        <sec:authorize access="isAuthenticated()">
+          <li class="nav-item"><a href="/user/board/list?param=choice" class="nav-link link-light px-2"><sec:authentication property="principal.member.name"/>님의 찜 목록</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link link-light px-2">로그 아웃</a></li>
+        </sec:authorize>
       </ul>
 
     </div>
   </div>
 </nav>
+
+
 

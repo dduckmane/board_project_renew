@@ -236,9 +236,9 @@
 
       for(let choice of [...choices]){
           choice.addEventListener("click",e=>{
+
               const choiceData = {
                   boardId: choice.id
-                  , choice: choice.checked
               }
               const reqInfo = {
                   method: 'POST'
@@ -249,17 +249,29 @@
                   , body: JSON.stringify(choiceData)
 
               }
-              fetch('/user/board/',reqInfo);
+              fetch('/user/board',reqInfo);
           })
       }
 
   }
+  function checkedChoiceButton(){
+      fetch('/user/board')
+          .then(res => res.json())
+          .then(checkedIdList => {
+              for(let boardId of [...checkedIdList]){
+                  let board = document.getElementById(boardId);
+                  board.checked=true;
+              }
+          })
+  }
+
 
 
   (function (){
     showImage();
     searchCondition();
     choiceBoard();
+    checkedChoiceButton();
 
   })();
 </script>

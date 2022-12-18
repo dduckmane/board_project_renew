@@ -11,6 +11,8 @@ public interface BoardRepositoryCustom {
 
     Page<Board> searchByRegions(String regions, BoardSearchCondition searchCondition, Pageable pageable);
 
+    Page<Board> searchByChoice(BoardSearchCondition searchCondition, Pageable pageable);
+
     Page<Board> searchBestInfo(Pageable pageable);
 
 }

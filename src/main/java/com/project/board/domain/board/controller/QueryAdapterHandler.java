@@ -1,5 +1,6 @@
 package com.project.board.domain.board.controller;
 
+import com.project.board.domain.board.controller.adapter.SearchByChoice;
 import com.project.board.domain.board.controller.adapter.SearchByRegionAdapter;
 import com.project.board.domain.board.controller.adapter.findQueryAdapter;
 import com.project.board.domain.board.controller.adapter.SearchAllAdapter;
@@ -23,6 +24,7 @@ public class QueryAdapterHandler {
 
         queryAdapters.add(new SearchAllAdapter(boardRepository));
         queryAdapters.add(new SearchByRegionAdapter(boardRepository));
+        queryAdapters.add(new SearchByChoice(boardRepository));
     }
 
     public Page<Board> service(Object param, BoardSearchCondition searchCondition, Pageable pageable){

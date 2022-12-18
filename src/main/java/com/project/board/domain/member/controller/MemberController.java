@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
-
+    private final MemberRepository memberRepository;
     @PostMapping("/board")
     public void selectedBoard(
             @AuthenticationPrincipal PrincipalDetails principalDetails
@@ -26,9 +26,22 @@ public class MemberController {
             ){
         memberService.choiceBoard(
                 choiceBoard.getBoardId()
-                , choiceBoard.getChoice()
                 , principalDetails.getMember());
 
+        Member member = memberRepository.findByUsername(principalDetails.getUsername()).orElseThrow();
+        List<Long> choiceBoard1 = member.getChoiceBoard();
+        for (Long aLong : choiceBoard1) {
+            System.out.println("aLong = " + aLong);
+        }
+    }
+    @GetMapping("/board")
+    public List<Long> findChoiceBoardId(
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+    ){
+        return memberRepository
+                .findByUsername(principalDetails.getUsername())
+                .orElseThrow()
+                .getChoiceBoard();
     }
 
 }

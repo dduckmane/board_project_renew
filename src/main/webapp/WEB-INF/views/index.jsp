@@ -53,7 +53,7 @@
     </div>
   </div>
 </section>
-${sessionScope.Authentication}
+
 <section id="services">
   <div class="section-content">
     <div class="container services">
