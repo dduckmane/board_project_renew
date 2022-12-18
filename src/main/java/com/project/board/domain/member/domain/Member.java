@@ -30,6 +30,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     List<Board>boards=new ArrayList<>();
 
+    @ElementCollection
+    List<Long> choiceBoard=new ArrayList<>();
+
     public Member(String name){
         this.name=name;
     }

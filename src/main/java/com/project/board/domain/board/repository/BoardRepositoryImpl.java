@@ -55,7 +55,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                         , titleEq(searchCondition.getTitle())
                         , filteringPrice(searchCondition.getPrice())
                         , board.groupId.eq(groupId)
-                );
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
 
         return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
     }
@@ -90,7 +93,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                         , titleEq(searchCondition.getTitle())
                         , filteringPrice(searchCondition.getPrice())
                         , board.address.representativeArea.eq(regions)
-                );
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
 
         return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
     }
@@ -116,13 +122,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
 
 
     private OrderSpecifier<?> boardSort(Pageable page) {
-        //서비스에서 보내준 Pageable 객체에 정렬조건 null 값 체크
         if (!page.getSort().isEmpty()) {
-            //정렬값이 들어 있으면 for 사용하여 값을 가져온다
             for (Sort.Order order : page.getSort()) {
-                // 서비스에서 넣어준 DESC or ASC 를 가져온다.
                 Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
-                // 서비스에서 넣어준 정렬 조건을 스위치 케이스 문을 활용하여 셋팅하여 준다.
                 switch (order.getProperty()){
                     case "id":
                         return new OrderSpecifier(direction, board.id);

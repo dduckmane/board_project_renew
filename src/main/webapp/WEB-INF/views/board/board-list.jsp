@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/boardList.css">
 </head>
 <style>
-    a.btn {
+    .btn {
         font-size: 1rem;
     }
     #sortBox, #searchBox, #money, #regions{
@@ -52,7 +52,8 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li class="dropdown-item">
-                <form class="d-flex" action="/user/board/list/${groupId}">
+                <form class="d-flex" action="">
+                    <input type="hidden" name="${requestParam}" value="${Param}">
 
                     <div id="regions">
                         <select class="form-select" id="inputGroupSelect4"
@@ -117,8 +118,39 @@
     </div>
 
     <div class="ms-auto">
-        <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/${groupId}">글쓰기</a>
-        <a class="btn btn-outline-success navbar-brand" href="/user/board/list/${groupId}">필터 초기화</a>
+        <c:choose>
+            <c:when test="${listParam.groupId!=null}">
+                <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/${listParam.groupId}">글쓰기</a>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-outline-success navbar-brand me-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    글쓰기
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                카테고리를 고르세요
+                            </div>
+
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/1">한식</a>
+                                <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/2">일식</a>
+                                <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/3">중식</a>
+                                <a class="btn btn-outline-success navbar-brand me-0" href="/user/board/save/4">양식</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
+        <a class="btn btn-outline-success navbar-brand" href="/user/board/list?${requestParam}=${Param}">필터 초기화</a>
     </div>
 
 </div>
@@ -126,28 +158,31 @@
 <div style = "padding: 3rem 3rem;"></div>
 
 <!-- 리스트 시작 -->
-<div class="row">
-  <c:forEach var="item" varStatus="status" items="${BoardDtoList}">
-      <div class="col-md-3 col-sm-6 p-0">
-          <div class="col-md">
-              <div class="card mb-3 p-0">
-                  <a href="/user/board/${item.id}">
-                      <img id="image" data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image" >
-                  </a>
-                  <div class="card-body p-1 m-0 d-flex flex-column justify-content-center align-items-center">
-                      <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
-                      <p class="card-text p-0 m-0 text-align">
-                          조회수: ${item.viewCnt}
-                      </p>
-                      <input type="checkbox" class="btn-check" name="options" id="option+${item.id}">
-                      <label class="btn btn-outline-danger p-0" for="option+${item.id}">😍</label>
-                  </div>
-              </div>
-          </div>
+<section id="boardList">
+    <div class="row">
+        <c:forEach var="item" varStatus="status" items="${BoardDtoList}">
+            <div class="col-md-3 col-sm-6 p-0">
+                <div class="col-md">
+                    <div class="card mb-3 p-0">
+                        <a href="/user/board/${item.id}">
+                            <img id="image" data-item-id="${item.id}" class="card-img card-img-left img-fluid" src="" alt="Card image" >
+                        </a>
+                        <div class="card-body p-1 m-0 d-flex flex-column justify-content-center align-items-center">
+                            <h5 class="card-title">${item.subTitle} <c:if test="${item.newArticle}"><img src="https://img.icons8.com/office/16/null/new.png"/></c:if></h5>
+                            <p class="card-text p-0 m-0 text-align">
+                                조회수: ${item.viewCnt}
+                            </p>
+                            <input type="checkbox" class="btn-check" name="options" id="option+${item.id} data-value=${item.id}">
+                            <label class="btn btn-outline-danger p-0" for="option+${item.id}">😍</label>
+                        </div>
+                    </div>
+                </div>
 
-      </div>
-  </c:forEach>
-</div>
+            </div>
+        </c:forEach>
+    </div>
+</section>
+
 
 <!-- pagination 시작 -->
 <div class="container mt-3">
@@ -157,7 +192,7 @@
     </c:if>
 
     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-      <li class="page-item ${pageMaker.nowPage == num ? 'active' : ''}"><a class="page-link" href="/user/board/list/1?page=${num-1}">${num}</a></li>
+      <li class="page-item ${pageMaker.nowPage == num ? 'active' : ''}"><a class="page-link" href="/user/board/list?groupId=${listParam.groupId}&page=${num-1}">${num}</a></li>
     </c:forEach>
 
     <c:if test="${not pageMaker.last}">
@@ -196,10 +231,17 @@
       content.name=condition1;
   }
 
+  function choiceBoard(){
+      let element = document.querySelector('#boardList .btn-check');
+
+      console.log(element.selected);
+  }
+
 
   (function (){
     showImage();
     searchCondition();
+    choiceBoard();
 
   })();
 </script>

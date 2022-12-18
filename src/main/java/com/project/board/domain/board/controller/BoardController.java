@@ -1,5 +1,6 @@
 package com.project.board.domain.board.controller;
 
+import com.project.board.domain.board.controller.request.ListParam;
 import com.project.board.domain.board.domain.Address;
 import com.project.board.domain.board.domain.UploadFile;
 import com.project.board.domain.board.dto.request.BoardDetailsDto;
@@ -35,18 +36,21 @@ import java.util.List;
 public class BoardController {
     private final BoardRepository boardRepository;
     private final BoardService boardService;
+    private final QueryAdapterHandler adapterHandler;
 
     private static final String UPLOAD_PATH = "C:\\sl_dev\\upload";
 
-    @GetMapping("/list/{groupId}")
+    @GetMapping("/list")
     //제목으로 검색 추가
     public String main(
-            @PathVariable int groupId
+            @ModelAttribute("listParam") ListParam listParam
             , BoardSearchCondition searchCondition
-            , @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable
+            , @PageableDefault(page = 0, size = 4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
             , Model model
     ){
-        Page<BoardDto> result = boardRepository.searchAllCondition(groupId, searchCondition, pageable).map(BoardDto::new);
+        Page<BoardDto> result = adapterHandler
+                .service(listParam.getParam(), searchCondition, pageable)
+                .map(BoardDto::new);
 
         int nowPage = result.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
@@ -54,9 +58,17 @@ public class BoardController {
 
         List<BoardDto> content = result.getContent();
         model.addAttribute("BoardDtoList",content);
-        model.addAttribute("groupId",groupId);
+        model.addAttribute("requestParam",listParam.getRequest());
+        model.addAttribute("Param",listParam.getParam());
 
-        PageMaker pageMaker = new PageMaker(nowPage, endPage, startPage, result.isFirst(), result.isLast(), result.getTotalPages());
+        PageMaker pageMaker = new PageMaker(
+                nowPage
+                , endPage
+                , startPage
+                , result.isFirst()
+                , result.isLast()
+                , result.getTotalPages());
+
         model.addAttribute("pageMaker",pageMaker);
 
         return "board/board-list";
@@ -87,7 +99,7 @@ public class BoardController {
     public String save(
             @AuthenticationPrincipal PrincipalDetails principalDetails
             , @ModelAttribute BoardSaveForm boardSaveForm
-            , @RequestParam int groupId
+            , @PathVariable int groupId
     ){
         log.info("/user/board/save POST");
         Member member = principalDetails.getMember();
@@ -108,7 +120,7 @@ public class BoardController {
                 , boardSaveForm.getPrice()
                 , boardSaveForm.getTag()
         );
-        return "redirect:/user/board/list/{groupId}";
+        return "redirect:/user/board/list?groupId={groupId}";
     }
     @GetMapping("/edit/{boardId}")
     public String editForm(@PathVariable Long boardId,Model model)

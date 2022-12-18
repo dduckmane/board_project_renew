@@ -93,7 +93,7 @@
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
               <h2 class="gallery-title">서울</h2>
-              <a class="link-warning text-decoration-none" href="#">서울 맛집 리스트</a>
+              <a class="link-warning text-decoration-none" href="/user/board/list?param=Seoul">서울 맛집 리스트</a>
             </div>
           </div>
         </div>
@@ -102,7 +102,7 @@
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
               <h2 class="gallery-title">경기</h2>
-              <a class="link-warning text-decoration-none" href="#">경기 맛집 리스트</a>
+              <a class="link-warning text-decoration-none" href="/user/board/list?param=gyeonggiDo">경기 맛집 리스트</a>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
           <div class="card card-body border-0 p-0">
             <div class="overlay d-flex flex-column justify-content-center align-items-center h-100 w-100 border-2">
               <h2 class="gallery-title">인천</h2>
-              <a class="link-warning text-decoration-none" href="#">인천 맛집 리스트</a>
+              <a class="link-warning text-decoration-none" href="/user/board/list?param=incheon">인천 맛집 리스트</a>
             </div>
           </div>
         </div>

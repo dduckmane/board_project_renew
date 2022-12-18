@@ -11,10 +11,10 @@
 
       <ul class="navbar-nav me-auto" aria-labelledby="navbarDropdown">
 
-        <li class="nav-item"><a href="/user/board/list/1" class="nav-link link-light px-2">한식</a></li>
-        <li class="nav-item"><a href="/user/board/list/2" class="nav-link link-light px-2 ">양식</a></li>
-        <li class="nav-item"><a href="/user/board/list/3" class="nav-link link-light px-2 ">중식</a></li>
-        <li class="nav-item"><a href="/user/board/list/4" class="nav-link link-light px-2 ">일식</a></li>
+        <li class="nav-item"><a href="/user/board/list?groupId=1" class="nav-link link-light px-2">한식</a></li>
+        <li class="nav-item"><a href="/user/board/list?groupId=2" class="nav-link link-light px-2 ">양식</a></li>
+        <li class="nav-item"><a href="/user/board/list?groupId=3" class="nav-link link-light px-2 ">중식</a></li>
+        <li class="nav-item"><a href="/user/board/list?groupId=4" class="nav-link link-light px-2 ">일식</a></li>
 
       </ul>
 
