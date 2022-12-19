@@ -23,8 +23,7 @@
       <ul class="navbar-nav">
 
         <c:if test="${empty pageContext.request.userPrincipal }">
-          <li class="nav-item"><a href="/login" class="nav-link link-light px-2">로그인</a></li>
-          <li class="nav-item"><a href="#" class="nav-link link-light px-2">회원가입</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link link-light px-2">로그인 / 회원가입</a></li>
         </c:if>
         <sec:authorize access="isAuthenticated()">
           <li class="nav-item"><a href="/user/board/list?param=choice" class="nav-link link-light px-2"><sec:authentication property="principal.member.name"/>님의 찜 목록</a></li>

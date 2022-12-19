@@ -3,10 +3,7 @@ package com.project.board.global.config.oauth;
 import com.project.board.domain.member.domain.Member;
 import com.project.board.domain.member.repository.MemberRepository;
 import com.project.board.global.config.auth.PrincipalDetails;
-import com.project.board.global.config.provider.FaceBookUserInfo;
-import com.project.board.global.config.provider.GoogleUserInfo;
-import com.project.board.global.config.provider.NaverUserInfo;
-import com.project.board.global.config.provider.Oauth2UserInfo;
+import com.project.board.global.config.provider.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +30,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         log.info("getAccessToken="+userRequest.getAccessToken().getTokenValue());
         OAuth2User oAuth2User = super.loadUser(userRequest);
         log.info("getAttributes="+oAuth2User.getAttributes());
+
         Oauth2UserInfo oauth2UserInfo=null;
         if(userRequest.getClientRegistration().getRegistrationId().equals("google")){
             log.info("구글 로그인 요청");
@@ -43,6 +41,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             log.info("네이버 로그인 요청");
             oauth2UserInfo=new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+        }else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            log.info("카카오 로그인 요청");
+            oauth2UserInfo=new KakaoUserInfo(oAuth2User.getAttributes());
         }else {
             log.info("우리는 구글과 네이버와 페이스북만 지원해요");
         }
