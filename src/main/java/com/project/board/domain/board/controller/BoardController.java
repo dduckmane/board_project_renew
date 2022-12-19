@@ -1,10 +1,12 @@
 package com.project.board.domain.board.controller;
 
+import com.project.board.domain.board.controller.request.ListParam;
+import com.project.board.domain.board.domain.Address;
 import com.project.board.domain.board.domain.UploadFile;
-import com.project.board.domain.board.dto.BoardDetailsDto;
-import com.project.board.domain.board.dto.BoardDto;
-import com.project.board.domain.board.dto.BoardSaveForm;
-import com.project.board.domain.board.dto.BoardUpdateForm;
+import com.project.board.domain.board.dto.request.BoardDetailsDto;
+import com.project.board.domain.board.dto.request.BoardDto;
+import com.project.board.domain.board.dto.request.BoardSaveForm;
+import com.project.board.domain.board.dto.request.BoardUpdateForm;
 import com.project.board.domain.board.repository.BoardRepository;
 import com.project.board.domain.board.search.BoardSearchCondition;
 import com.project.board.domain.board.service.BoardService;
@@ -34,35 +36,55 @@ import java.util.List;
 public class BoardController {
     private final BoardRepository boardRepository;
     private final BoardService boardService;
+    private final QueryAdapterHandler adapterHandler;
 
     private static final String UPLOAD_PATH = "C:\\sl_dev\\upload";
 
-    @GetMapping("/list/{groupId}")
-    public String main(@PathVariable int groupId, BoardSearchCondition searchCondition,
-                               @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable, Model model){
-        Page<BoardDto> result = boardRepository.searchAllCondition(groupId, searchCondition, pageable).map(BoardDto::new);
+    @GetMapping("/list")
+    //제목으로 검색 추가
+    public String main(
+            @ModelAttribute("listParam") ListParam listParam
+            , BoardSearchCondition searchCondition
+            , @PageableDefault(page = 0, size = 4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+            , Model model
+    ){
+        Page<BoardDto> result = adapterHandler
+                .service(listParam.getParam(), searchCondition, pageable)
+                .map(BoardDto::new);
 
-
-        System.out.println("result.getTotalPages() = " + result.getTotalPages());
-        
         int nowPage = result.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, result.getTotalPages());
 
         List<BoardDto> content = result.getContent();
         model.addAttribute("BoardDtoList",content);
-        model.addAttribute("groupId",groupId);
+        model.addAttribute("requestParam",listParam.getRequest());
+        model.addAttribute("Param",listParam.getParam());
 
-        PageMaker pageMaker = new PageMaker(nowPage, endPage, startPage, result.isFirst(), result.isLast(), result.getTotalPages());
+        PageMaker pageMaker = new PageMaker(
+                nowPage
+                , endPage
+                , startPage
+                , result.isFirst()
+                , result.isLast()
+                , result.getTotalPages());
+
         model.addAttribute("pageMaker",pageMaker);
 
         return "board/board-list";
     }
     @GetMapping("/{boardId}")
-    public String board(@PathVariable Long boardId, HttpServletResponse response, HttpServletRequest request,Model model){
+    public String board(
+            @PathVariable Long boardId
+            , HttpServletResponse response
+            , HttpServletRequest request
+            ,Model model
+    ){
         BoardDetailsDto boardDetailsDto = boardService
                 .findOne(boardId, response, request)
                 .map(BoardDetailsDto::new).orElseThrow();
+
+        boardDetailsDto.getTag().stream().forEach(s -> System.out.println("s = " + s));
 
         model.addAttribute("boardDetailsDto",boardDetailsDto);
 
@@ -74,17 +96,31 @@ public class BoardController {
         return "board/board-write";}
 
     @PostMapping("/save/{groupId}")
-    public String save(@AuthenticationPrincipal PrincipalDetails principalDetails, @ModelAttribute BoardSaveForm boardSaveForm, @RequestParam int groupId, RedirectAttributes redirectAttributes){
-
+    public String save(
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+            , @ModelAttribute BoardSaveForm boardSaveForm
+            , @PathVariable int groupId
+    ){
         log.info("/user/board/save POST");
         Member member = principalDetails.getMember();
 
         UploadFile uploadFile = UploadFile.createUploadFile(boardSaveForm.getThumbNail(), UPLOAD_PATH);
-
         List<UploadFile> uploadFiles = UploadFile.storeFiles(boardSaveForm.getAttachFiles(), UPLOAD_PATH);
 
-        boardService.save(member,groupId,boardSaveForm.getTitle(),boardSaveForm.getContent(),uploadFile,uploadFiles);
-        return "redirect:/user/board/list/{groupId}";
+        boardService.save(
+                member
+                , groupId
+                , boardSaveForm.getTitle()
+                , boardSaveForm.getContent()
+                , uploadFile
+                , new Address(
+                        boardSaveForm.getRepresentativeArea()
+                        ,boardSaveForm.getDetailArea())
+                , uploadFiles
+                , boardSaveForm.getPrice()
+                , boardSaveForm.getTag()
+        );
+        return "redirect:/user/board/list?groupId={groupId}";
     }
     @GetMapping("/edit/{boardId}")
     public String editForm(@PathVariable Long boardId,Model model)
@@ -107,4 +143,5 @@ public class BoardController {
         boardService.delete(boardId);
         return "redirect:/";
     }
+
 }

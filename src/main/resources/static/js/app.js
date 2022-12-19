@@ -2,6 +2,7 @@ const slickSlide = jQuery('#slick-slide')
 
 if (slickSlide) {
   slickSlide.slick({
+    variableWidth: true,
     dots: true,
     arrows: false,
     slidesToShow: 4,

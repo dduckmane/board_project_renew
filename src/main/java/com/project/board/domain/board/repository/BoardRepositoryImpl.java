@@ -27,59 +27,154 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     }
     @Override
     public Page<Board> searchAllCondition(int groupId, BoardSearchCondition searchCondition, Pageable pageable) {
+
         List<Board> result = queryFactory
                 .select(board).distinct()
                 .from(board)
                 .join(board.member,member).fetchJoin()
-//                .leftJoin(board.replies,reply)
                 .where(
                         usernameOrTitleEq(searchCondition.getAll())
-                        ,usernameEq(searchCondition.getName())
-                        ,titleEq(searchCondition.getTitle())
-                        ,board.groupId.eq(groupId)
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , filteringTag(searchCondition.getTag())
+                        , board.groupId.eq(groupId)
                 )
                 .orderBy(boardSort(pageable))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch();
+                .fetch()
+                ;
         JPAQuery<Long> CountQuery = queryFactory
                 .select(board.count()).distinct()
                 .from(board)
                 .join(board.member,member)
-//                .join(board.replies,reply)
                 .where(
                         usernameOrTitleEq(searchCondition.getAll())
-                        ,usernameEq(searchCondition.getName())
-                        ,titleEq(searchCondition.getTitle())
-                        ,board.groupId.eq(groupId)
-                );
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , board.groupId.eq(groupId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
+
         return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
     }
-    /**
-     * OrderSpecifier 를 쿼리로 반환하여 정렬조건을 맞춰준다.
-     * 리스트 정렬
-     * @param page
-     * @return
-     */
+
+    @Override
+    public Page<Board> searchByRegions(String regions, BoardSearchCondition searchCondition, Pageable pageable) {
+
+        List<Board> result = queryFactory
+                .select(board).distinct()
+                .from(board)
+                .join(board.member,member).fetchJoin()
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , filteringTag(searchCondition.getTag())
+                        , board.address.representativeArea.eq(regions)
+                )
+                .orderBy(boardSort(pageable))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch()
+                ;
+        JPAQuery<Long> CountQuery = queryFactory
+                .select(board.count()).distinct()
+                .from(board)
+                .join(board.member,member)
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , board.address.representativeArea.eq(regions)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
+
+        return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
+    }
+    @Override
+    public Page<Board> searchByChoice(BoardSearchCondition searchCondition, Pageable pageable) {
+
+        List<Board> result = queryFactory
+                .select(board).distinct()
+                .from(board)
+                .join(board.member,member).fetchJoin()
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , filteringTag(searchCondition.getTag())
+                        , board.id.in(member.choiceBoard)
+                )
+                .orderBy(boardSort(pageable))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch()
+                ;
+        JPAQuery<Long> CountQuery = queryFactory
+                .select(board.count()).distinct()
+                .from(board)
+                .join(board.member,member)
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , board.id.in(member.choiceBoard)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
+
+        return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
+    }
+
+    public Page<Board> searchBestInfo(Pageable pageable) {
+        List<Board> result = queryFactory
+                .selectFrom(board)
+                .orderBy(board.viewCnt.desc())
+                .offset(pageable.getOffset())
+                .limit(6l)
+                .fetch();
+
+        JPAQuery<Long> CountQuery = queryFactory
+                .select(board.count())
+                .from(board)
+                .offset(pageable.getOffset())
+                .limit(6l)
+                ;
+
+        return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
+    }
+
+
+
     private OrderSpecifier<?> boardSort(Pageable page) {
-        //서비스에서 보내준 Pageable 객체에 정렬조건 null 값 체크
         if (!page.getSort().isEmpty()) {
-            //정렬값이 들어 있으면 for 사용하여 값을 가져온다
             for (Sort.Order order : page.getSort()) {
-                // 서비스에서 넣어준 DESC or ASC 를 가져온다.
                 Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
-                // 서비스에서 넣어준 정렬 조건을 스위치 케이스 문을 활용하여 셋팅하여 준다.
                 switch (order.getProperty()){
                     case "id":
                         return new OrderSpecifier(direction, board.id);
-                    case "title":
-                        return new OrderSpecifier(direction, board.title);
-                    case "content":
-                        return new OrderSpecifier(direction, board.content);
-                    case "member":
-                        return new OrderSpecifier(direction, board.member.name);
-                    case "createdDate":
-                        return new OrderSpecifier(direction, board.createdDate);
+                    case "titleASC":
+                        return new OrderSpecifier(Order.ASC, board.title);
+                    case "titleDESC":
+                        return new OrderSpecifier(Order.DESC, board.title);
+                    case "createdDateASC":
+                        return new OrderSpecifier(Order.ASC, board.createdDate);
+                    case "createdDateDESC":
+                        return new OrderSpecifier(Order.DESC, board.createdDate);
+                    case "viewCnt":
+                        return new OrderSpecifier(Order.DESC, board.viewCnt);
                 }
             }
         }
@@ -93,5 +188,15 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     }
     private BooleanExpression usernameOrTitleEq(String all){
         return !isEmpty(all) ? board.title.contains(all).or(member.username.contains(all)) : null;
+    }
+    private BooleanExpression filteringTag(String tag){
+        return !isEmpty(tag) ? board.tagSum.contains(tag) : null;
+    }
+    private BooleanExpression filteringPrice(String price){
+        if(isEmpty(price)) return null;
+        if(price.equals("10000")) return board.price.loe(10000);
+        else if(price.equals("20000")) return board.price.goe(10000).and(board.price.loe(20000));
+        else if(price.equals("30000")) return board.price.goe(20000).and(board.price.loe(30000));
+        else return board.price.goe(30000);
     }
 }

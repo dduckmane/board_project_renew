@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -30,6 +31,11 @@ public class Board extends BaseEntity {
     //썸네일 이미지
     @Embedded
     private UploadFile thumbNail;
+    @Embedded
+    private Address address;
+    private int price;
+
+    private String tagSum;
     //첨부파일
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<BoardFiles>attachFiles;
@@ -39,6 +45,12 @@ public class Board extends BaseEntity {
         this.title=title;
     }
 
+    public List<String> getTag(){
+        if(this.tagSum.length()>0){
+            return Arrays.asList(this.tagSum.split(","));
+        }
+        return new ArrayList<>();
+    }
     public void setMember(Member member) {
         this.member = member;
         member.getBoards().add(this);
@@ -54,7 +66,10 @@ public class Board extends BaseEntity {
             ,String title
             ,String content
             ,UploadFile thumbNail
+            ,Address address
             , List <BoardFiles> attachFiles
+            , int price
+            , String tag
     ){
         Board board = new Board();
 
@@ -63,6 +78,9 @@ public class Board extends BaseEntity {
         board.groupId=groupId;
         board.content=content;
         board.thumbNail=thumbNail;
+        board.address=address;
+        board.price=price;
+        board.tagSum=tag;
 
         member.getBoards().add(board);
 

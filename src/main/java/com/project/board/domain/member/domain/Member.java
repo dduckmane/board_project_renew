@@ -30,6 +30,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     List<Board>boards=new ArrayList<>();
 
+    @ElementCollection
+    List<Long> choiceBoard=new ArrayList<>();
+
     public Member(String name){
         this.name=name;
     }
@@ -55,5 +58,15 @@ public class Member extends BaseTimeEntity {
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
+    }
+
+    public void choiceBoard(Long boardId) {
+        Long findBoardId = choiceBoard.stream().filter(id -> id == boardId).findFirst().orElse(null);
+
+        if(findBoardId==null){
+            choiceBoard.add(boardId);
+        }else{
+            choiceBoard.remove(boardId);
+        }
     }
 }

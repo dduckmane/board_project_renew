@@ -1,4 +1,4 @@
-package com.project.board.domain.board.dto;
+package com.project.board.domain.board.dto.request;
 
 import com.project.board.domain.board.domain.Board;
 import lombok.AccessLevel;
@@ -18,7 +18,10 @@ public class BoardDetailsDto {
     private Long viewCnt;
     private String username;
     private String createTime;
+    private String detailArea;
     private List<BoardFilesDto> boardFilesDto;
+    private int price;
+    private List<String> tag;
 
     public BoardDetailsDto(Board board) {
         this.id=board.getId();
@@ -27,6 +30,10 @@ public class BoardDetailsDto {
         this.viewCnt = board.getViewCnt();
         this.username = board.getMember().getUsername();
         this.createTime = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.detailArea = board.getAddress().getDetailArea();
         this.boardFilesDto = board.getAttachFiles().stream().map(BoardFilesDto::new).collect(Collectors.toList());
+        this.price=board.getPrice();
+        this.tag=board.getTag();
+
     }
 }

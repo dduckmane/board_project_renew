@@ -1,4 +1,4 @@
-package com.project.board.domain.board.dto;
+package com.project.board.domain.board.dto.request;
 
 import com.project.board.domain.board.domain.Board;
 import lombok.Data;

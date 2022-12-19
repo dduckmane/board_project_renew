@@ -1,5 +1,6 @@
 package com.project.board.global.config;
 
+import com.project.board.global.config.handler.LogoutCustomHandler;
 import com.project.board.global.config.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,22 +29,30 @@ public class SecurityConfig{
         httpSecurity.csrf().disable();
         httpSecurity
                 .apply(new MyCustomDsl())
+
+                .and()
+                .logout()
+                .logoutSuccessUrl("/logoutHandler")
                 .and()
                 .authorizeRequests()
+
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN')or hasRole('ROLE_MANAGER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
+
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")//loginUrl로 설정한 것을 시큐리티가 낚애채서 대신 로그인을 진행;
                 .defaultSuccessUrl("/")
+
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
                 .userService(userService)
+
         ;
         return httpSecurity.build();
     }

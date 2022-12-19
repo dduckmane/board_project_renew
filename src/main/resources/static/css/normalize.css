@@ -386,7 +386,9 @@ table{
   display: block;
   clear: both;
 }
-
+#footer h4 {
+  color: #29407b;
+}
 
 
 
