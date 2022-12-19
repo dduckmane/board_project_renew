@@ -11,6 +11,7 @@ import com.project.board.domain.board.repository.BoardRepository;
 import com.project.board.domain.board.search.BoardSearchCondition;
 import com.project.board.domain.board.service.BoardService;
 import com.project.board.domain.member.domain.Member;
+import com.project.board.domain.member.service.MemberService;
 import com.project.board.domain.page.PageMaker;
 import com.project.board.global.config.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +38,15 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final BoardService boardService;
     private final QueryAdapterHandler adapterHandler;
+    private final MemberService memberService;
 
     private static final String UPLOAD_PATH = "C:\\sl_dev\\upload";
 
     @GetMapping("/list")
     //제목으로 검색 추가
     public String main(
-            @ModelAttribute("listParam") ListParam listParam
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+            , @ModelAttribute("listParam") ListParam listParam
             , BoardSearchCondition searchCondition
             , @PageableDefault(page = 0, size = 4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
             , Model model
@@ -51,6 +54,8 @@ public class BoardController {
         Page<BoardDto> result = adapterHandler
                 .service(listParam.getParam(), searchCondition, pageable)
                 .map(BoardDto::new);
+
+        memberService.collectInfo(principalDetails.getMember(),listParam,searchCondition);
 
         int nowPage = result.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
