@@ -33,6 +33,9 @@ public class SearchInfo {
     private PriceCnt priceCnt=new PriceCnt();
     @Embedded
     private TagCnt tagCnt=new TagCnt();
+    @Embedded
+    private NameInfoAdd nameInfoAdd=new NameInfoAdd();
+
     @OneToOne(mappedBy = "searchInfo", fetch = FetchType.LAZY)
     private Member member;
 
@@ -60,6 +63,7 @@ public class SearchInfo {
         info.add(regionsCnt);
         info.add(category);
         info.add(tagCnt);
+        info.add(nameInfoAdd);
 
         return info.stream()
                 .filter(addCnt -> addCnt.support(name))
@@ -74,6 +78,7 @@ public class SearchInfo {
         sum+= priceCnt.getScore(board.getPrice());
         sum+= regionsCnt.getScore(board.getAddress().getRepresentativeArea());
         sum+= tagCnt.getScore(board.getTagSum());
+        sum+= nameInfoAdd.getScore(board.getTitle());
 
         return sum;
     }

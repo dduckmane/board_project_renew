@@ -19,7 +19,7 @@ public class NameInfoAdd implements AddCnt {
     @Override
     public Boolean support(String name) {
 
-        return name.equals("TAG");
+        return name.equals("title");
     }
 
     @Override
