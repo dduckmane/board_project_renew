@@ -101,6 +101,41 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
         return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
     }
     @Override
+    public Page<Board> searchAll(BoardSearchCondition searchCondition, Pageable pageable) {
+
+        List<Board> result = queryFactory
+                .select(board).distinct()
+                .from(board)
+                .join(board.member,member).fetchJoin()
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                        , filteringTag(searchCondition.getTag())
+                )
+                .orderBy(boardSort(pageable))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch()
+                ;
+        JPAQuery<Long> CountQuery = queryFactory
+                .select(board.count()).distinct()
+                .from(board)
+                .join(board.member,member)
+                .where(
+                        usernameOrTitleEq(searchCondition.getAll())
+                        , usernameEq(searchCondition.getName())
+                        , titleEq(searchCondition.getTitle())
+                        , filteringPrice(searchCondition.getPrice())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
+
+        return PageableExecutionUtils.getPage(result,pageable,CountQuery::fetchOne);
+    }
+    @Override
     public Page<Board> searchByChoice(BoardSearchCondition searchCondition, Pageable pageable) {
 
         List<Board> result = queryFactory
@@ -195,8 +230,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     private BooleanExpression filteringPrice(String price){
         if(isEmpty(price)) return null;
         if(price.equals("10000")) return board.price.loe(10000);
-        else if(price.equals("20000")) return board.price.goe(10000).and(board.price.loe(20000));
-        else if(price.equals("30000")) return board.price.goe(20000).and(board.price.loe(30000));
-        else return board.price.goe(30000);
+        else if(price.equals("20000")) return board.price.gt(10000).and(board.price.loe(20000));
+        else if(price.equals("30000")) return board.price.gt(20000).and(board.price.loe(30000));
+        else return board.price.gt(30000);
     }
 }

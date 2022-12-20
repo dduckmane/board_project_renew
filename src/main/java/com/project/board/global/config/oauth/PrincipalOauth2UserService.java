@@ -1,7 +1,9 @@
 package com.project.board.global.config.oauth;
 
 import com.project.board.domain.member.domain.Member;
+import com.project.board.domain.member.domain.searchInfo.SearchInfo;
 import com.project.board.domain.member.repository.MemberRepository;
+import com.project.board.domain.member.repository.SearchInfoRepository;
 import com.project.board.global.config.auth.PrincipalDetails;
 import com.project.board.global.config.provider.*;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -23,7 +26,9 @@ import java.util.Map;
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private final BCryptPasswordEncoder encoder;
     private final MemberRepository memberRepository;
+    private final SearchInfoRepository searchInfoRepository;
     @Override
+    @Transactional
     //이 메서드를 사용하면 userRequest매개변수에 사용자 정보와 엑세스토큰이 들어온다ㅏ.
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("getClientRegistration="+userRequest.getClientRegistration());
@@ -70,6 +75,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .name(name)
                     .build();
             memberRepository.save(member);
+
+            SearchInfo searchInfo = new SearchInfo(member);
+            searchInfoRepository.save(searchInfo);
+
         }else {
             log.info("로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어있습니다.");
         }

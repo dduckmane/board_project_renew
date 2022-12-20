@@ -2,6 +2,7 @@ package com.project.board.domain.member.domain;
 
 import com.project.board.domain.base.BaseTimeEntity;
 import com.project.board.domain.board.domain.Board;
+import com.project.board.domain.member.domain.searchInfo.SearchInfo;
 import com.project.board.domain.reply.domain.Reply;
 import lombok.*;
 
@@ -32,9 +33,15 @@ public class Member extends BaseTimeEntity {
 
     @ElementCollection
     List<Long> choiceBoard=new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "searchInfo_id")
+    private SearchInfo searchInfo;
 
     public Member(String name){
         this.name=name;
+    }
+    public void addSearchInfo(SearchInfo searchInfo){
+        this.searchInfo=searchInfo;
     }
 
     public void setReplies(Reply reply) {
