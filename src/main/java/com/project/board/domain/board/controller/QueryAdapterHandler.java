@@ -21,8 +21,8 @@ public class QueryAdapterHandler {
 
         queryAdapters.add(new SearchAllAdapter(boardRepository));
         queryAdapters.add(new SearchByRegionAdapter(boardRepository));
-        queryAdapters.add(new SearchByChoice(boardRepository));
-        queryAdapters.add(new SearchByRecommend(boardRepository));
+        queryAdapters.add(new SearchByChoiceAdapter(boardRepository));
+        queryAdapters.add(new SearchByRecommendAdapter(boardRepository));
     }
 
     public Page<Board> service(Object param, BoardSearchCondition searchCondition, Pageable pageable){

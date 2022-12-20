@@ -1,6 +1,6 @@
 package com.project.board.domain.board.controller.adapter;
 
-import com.project.board.domain.board.controller.adapter.dto.RecommendDto;
+import com.project.board.domain.board.controller.adapter.dto.RecommendListDto;
 import com.project.board.domain.board.domain.Board;
 import com.project.board.domain.board.repository.BoardRepositoryImpl;
 import com.project.board.domain.board.search.BoardSearchCondition;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,10 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class SearchByRecommend implements findQueryAdapter{
+public class SearchByRecommendAdapter implements findQueryAdapter{
 
     private final BoardRepositoryImpl boardRepository;
-    private List<RecommendDto> recommendDtos=new ArrayList<>();
+    private List<RecommendListDto> recommendListDtos =new ArrayList<>();
 
     @Override
     public boolean supports(Object param) {
@@ -31,18 +30,26 @@ public class SearchByRecommend implements findQueryAdapter{
 
     @Override
     public Page<Board> handle(Object param, BoardSearchCondition searchCondition, Pageable pageable) {
-        recommendDtos.clear();
+        //하기전 list를 비움
+        recommendListDtos.clear();
 
         Page<Board> boards = boardRepository.searchAll(searchCondition, pageable);
         List<Board> content = boards.getContent();
 
         content.stream().forEach(board -> {
+            //각 board 의 점수를 환산
+            /**
+             * searchInfo도 fetch join
+             **/
             int totalScore = board.getMember().getSearchInfo().getTotalScore(board);
-            recommendDtos.add(new RecommendDto(totalScore,board));
+            //환산한 board 의 점수와 board 를 list 에 담음
+            recommendListDtos.add(new RecommendListDto(totalScore,board));
         });
-        Collections.sort(recommendDtos);
+        // 점수 바탕으로 정렬
+        Collections.sort(recommendListDtos);
 
-        List<Board> result = recommendDtos.stream().map(recommendDto -> recommendDto.getBoard()).collect(Collectors.toList());
+        //새로운 page 객체를 만듦
+        List<Board> result = recommendListDtos.stream().map(recommendListDto -> recommendListDto.getBoard()).collect(Collectors.toList());
         return new PageImpl<>(result,pageable,boards.getTotalElements());
     }
 }

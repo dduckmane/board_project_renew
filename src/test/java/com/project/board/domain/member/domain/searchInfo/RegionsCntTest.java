@@ -1,10 +1,9 @@
 package com.project.board.domain.member.domain.searchInfo;
 
+import com.project.board.domain.member.domain.searchInfo.searchCnt.RegionsCnt;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RegionsCntTest {
 

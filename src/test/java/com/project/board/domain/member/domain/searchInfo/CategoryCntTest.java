@@ -1,11 +1,9 @@
 package com.project.board.domain.member.domain.searchInfo;
 
+import com.project.board.domain.member.domain.searchInfo.searchCnt.CategoryCnt;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryCntTest {
 

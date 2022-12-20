@@ -1,4 +1,4 @@
-package com.project.board.domain.member.domain.searchInfo;
+package com.project.board.domain.member.domain.searchInfo.searchCnt;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.project.board.domain.member.domain.searchInfo.SearchInfo.CATEGORY;
 import static com.project.board.domain.member.domain.searchInfo.SearchInfo.PRICE;
 import static com.project.board.global.util.OrderUtils.order;
 
@@ -28,7 +27,6 @@ public class PriceCnt implements AddCnt {
     @Override
     public Boolean support(String name) {
         return name.equals(PRICE);
-
     }
     @Override
     public void addCnt(String price) {
@@ -46,12 +44,11 @@ public class PriceCnt implements AddCnt {
                 ,Integer.toString(four)+"four"
                 ,"0"
         };
-        Arrays.sort(orders);
 
+        Arrays.sort(orders);
         order(0,orders,orderMap,orders.length-1,0);
 
-        Integer score = getScoreByGroupId(price);
-        return score;
+        return getScoreByGroupId(price);
     }
 
     private Integer getScoreByGroupId(int price) {

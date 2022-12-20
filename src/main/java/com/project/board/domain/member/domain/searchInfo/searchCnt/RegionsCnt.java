@@ -1,4 +1,4 @@
-package com.project.board.domain.member.domain.searchInfo;
+package com.project.board.domain.member.domain.searchInfo.searchCnt;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.project.board.domain.member.domain.searchInfo.SearchInfo.PRICE;
 import static com.project.board.domain.member.domain.searchInfo.SearchInfo.REGION;
 import static com.project.board.global.util.OrderUtils.order;
 
@@ -61,13 +60,12 @@ public class RegionsCnt implements AddCnt {
                 ,Integer.toString(chungcheongDo)+"chungcheongDo"
                 ,"0"
         };
-        Arrays.sort(orders);
 
+        Arrays.sort(orders);
         order(0,orders,orderMap,orders.length-1,0);
 
-        Integer score = getScoreByGroupId(region);
-        if (score != null) return score;
-        throw new IllegalArgumentException("잘못된 groupId");
+        return getScoreByGroupId(region);
+
     }
 
     private Integer getScoreByGroupId(String region) {
@@ -80,7 +78,8 @@ public class RegionsCnt implements AddCnt {
         if(region.equals("gyeongsangBukDo")) return orderMap.get("gyeongsangBukDo");
         if(region.equals("gyeongsangNamDo")) return orderMap.get("gyeongsangNamDo");
         if(region.equals("chungcheongDo")) return orderMap.get("chungcheongDo");
-        return null;
+
+        throw new IllegalArgumentException("잘못된 groupId");
     }
 
 }

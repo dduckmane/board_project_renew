@@ -1,5 +1,7 @@
-package com.project.board.domain.member.domain.searchInfo;
+package com.project.board.domain.member.domain.searchInfo.searchCnt;
 
+import com.project.board.domain.member.domain.searchInfo.SearchInfo;
+import com.project.board.domain.member.domain.searchInfo.searchCnt.AddCnt;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.project.board.domain.member.domain.searchInfo.SearchInfo.PRICE;
+import static com.project.board.domain.member.domain.searchInfo.SearchInfo.*;
 import static com.project.board.global.util.OrderUtils.order;
 
 @NoArgsConstructor
@@ -25,14 +27,14 @@ public class TagCnt implements AddCnt {
 
     @Override
     public Boolean support(String name) {
-        return name.equals("tag");
-
+        return name.equals(TAG);
     }
     @Override
     public void addCnt(String tag) {
-        if(tag.equals("atmosphere")) atmosphere++;
-        else if(tag.equals("money")) money++;
-        else if(tag.equals("reservation")) reservation++;
+
+        if(tag.contains("atmosphere")) atmosphere++;
+        else if(tag.contains("money")) money++;
+        else if(tag.contains("reservation")) reservation++;
         else play++;
     }
     public int getScore(String tag){
@@ -44,19 +46,21 @@ public class TagCnt implements AddCnt {
                 ,Integer.toString(play)+"play"
                 ,"0"
         };
-        Arrays.sort(orders);
 
+        Arrays.sort(orders);
         order(0,orders,orderMap,orders.length-1,0);
 
-        Integer score = getScoreByGroupId(tag);
-        return score;
+        return getScoreByGroupId(tag);
     }
 
     private Integer getScoreByGroupId(String tag) {
-        if(tag.equals("atmosphere")) return orderMap.get("atmosphere");
-        if(tag.equals("money")) return orderMap.get("money");
-        if(tag.equals("reservation")) return orderMap.get("reservation");
-        if(tag.equals("play")) return orderMap.get("play");
-        throw new IllegalArgumentException("No search Tag");
+        int sum=0;
+
+        if(tag.contains("atmosphere"))  sum+=orderMap.get("atmosphere");
+        if(tag.equals("money")) sum+= orderMap.get("money");
+        if(tag.equals("reservation")) sum+= orderMap.get("reservation");
+        if(tag.equals("play")) sum+= orderMap.get("play");
+
+        return sum;
     }
 }

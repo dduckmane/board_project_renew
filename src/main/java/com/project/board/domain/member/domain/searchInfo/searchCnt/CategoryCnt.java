@@ -1,4 +1,4 @@
-package com.project.board.domain.member.domain.searchInfo;
+package com.project.board.domain.member.domain.searchInfo.searchCnt;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,13 +46,11 @@ public class CategoryCnt implements AddCnt {
                 ,Integer.toString(america)+"america"
                 ,"0"
         };
+
         Arrays.sort(orders);
-        
         order(0,orders,orderMap,orders.length-1,0);
 
-        Integer score = getScoreByGroupId(groupId);
-        if (score != null) return score;
-        throw new IllegalArgumentException("잘못된 groupId");
+        return getScoreByGroupId(groupId);
     }
 
     private Integer getScoreByGroupId(int groupId) {
@@ -60,6 +58,6 @@ public class CategoryCnt implements AddCnt {
         if(groupId ==2) return orderMap.get("america");
         if(groupId ==3) return orderMap.get("china");
         if(groupId ==4) return orderMap.get("japan");
-        return null;
+        throw new IllegalArgumentException("잘못된 groupId");
     }
 }
