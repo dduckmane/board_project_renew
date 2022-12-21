@@ -11,10 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 public class BoardApplication extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(BoardApplication.class);
-	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BoardApplication.class, args);
