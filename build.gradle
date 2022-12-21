@@ -3,15 +3,14 @@ buildscript {
 		queryDslVersion = "5.0.0"
 	}
 }
-
 plugins {
 	id 'java'
 	id 'war'
 	id 'org.springframework.boot' version '2.7.6'
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
-
 war {
 	archiveName 'ROOT.war'
 }
@@ -22,7 +21,6 @@ war.enabled=true;
 tasks.named('test'){
 	exclude '**/*'
 }
-
 group = 'com.project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -32,6 +30,7 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+
 repositories {
 	mavenCentral()
 }
@@ -80,11 +79,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
 	implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.6'
 }
-
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
-//querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
 querydsl {
 	jpa = true
@@ -100,3 +94,4 @@ compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
 //querydsl 추가 끝
+
