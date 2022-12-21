@@ -21,16 +21,12 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @RequiredArgsConstructor
 public class SecurityConfig{
     private final PrincipalOauth2UserService userService;
-    private final CorsConfig corsConfig;
 
 
     @Bean//스프링 필터에 이 빈을 등록
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
         httpSecurity
-                .apply(new MyCustomDsl())
-
-                .and()
                 .logout()
                 .logoutSuccessUrl("/logoutHandler")
                 .and()
@@ -58,24 +54,7 @@ public class SecurityConfig{
     }
 
 
-    public void configure(WebSecurity webSecurity){
-        webSecurity.httpFirewall(defaultHttpFirewall());
-    }
-    @Bean
-    public HttpFirewall defaultHttpFirewall(){
-        return new DefaultHttpFirewall();
-    }
-    public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilter(corsConfig.corsFilter());
 
-        }
-
-
-
-    }
 
 
 }
